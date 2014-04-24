@@ -1,0 +1,314 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		94FE19841909BF3B0071DC3C /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94FE19831909BF3B0071DC3C /* Cocoa.framework */; };
+		94FE19901909BF3B0071DC3C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 94FE198F1909BF3B0071DC3C /* main.m */; };
+		94FE19971909BF3B0071DC3C /* KOAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 94FE19961909BF3B0071DC3C /* KOAppDelegate.m */; };
+		94FE199A1909BF3B0071DC3C /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 94FE19981909BF3B0071DC3C /* MainMenu.xib */; };
+		94FE199C1909BF3B0071DC3C /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 94FE199B1909BF3B0071DC3C /* Images.xcassets */; };
+		94FE19B91909C08E0071DC3C /* KOTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 94FE19B81909C08E0071DC3C /* KOTextView.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		94FE19801909BF3B0071DC3C /* Chaos.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Chaos.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		94FE19831909BF3B0071DC3C /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		94FE19861909BF3B0071DC3C /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		94FE19871909BF3B0071DC3C /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		94FE19881909BF3B0071DC3C /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		94FE198B1909BF3B0071DC3C /* Chaos-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Chaos-Info.plist"; sourceTree = "<group>"; };
+		94FE198F1909BF3B0071DC3C /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		94FE19911909BF3B0071DC3C /* Chaos-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Chaos-Prefix.pch"; sourceTree = "<group>"; };
+		94FE19951909BF3B0071DC3C /* KOAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KOAppDelegate.h; sourceTree = "<group>"; };
+		94FE19961909BF3B0071DC3C /* KOAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KOAppDelegate.m; sourceTree = "<group>"; };
+		94FE19991909BF3B0071DC3C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		94FE199B1909BF3B0071DC3C /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		94FE19A21909BF3B0071DC3C /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		94FE19B71909C08E0071DC3C /* KOTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KOTextView.h; sourceTree = "<group>"; };
+		94FE19B81909C08E0071DC3C /* KOTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KOTextView.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		94FE197D1909BF3B0071DC3C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				94FE19841909BF3B0071DC3C /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		94FE19771909BF3B0071DC3C = {
+			isa = PBXGroup;
+			children = (
+				94FE19891909BF3B0071DC3C /* Chaos */,
+				94FE19821909BF3B0071DC3C /* Frameworks */,
+				94FE19811909BF3B0071DC3C /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		94FE19811909BF3B0071DC3C /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				94FE19801909BF3B0071DC3C /* Chaos.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		94FE19821909BF3B0071DC3C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				94FE19831909BF3B0071DC3C /* Cocoa.framework */,
+				94FE19A21909BF3B0071DC3C /* XCTest.framework */,
+				94FE19851909BF3B0071DC3C /* Other Frameworks */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		94FE19851909BF3B0071DC3C /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				94FE19861909BF3B0071DC3C /* AppKit.framework */,
+				94FE19871909BF3B0071DC3C /* CoreData.framework */,
+				94FE19881909BF3B0071DC3C /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		94FE19891909BF3B0071DC3C /* Chaos */ = {
+			isa = PBXGroup;
+			children = (
+				94FE19951909BF3B0071DC3C /* KOAppDelegate.h */,
+				94FE19961909BF3B0071DC3C /* KOAppDelegate.m */,
+				94FE19B71909C08E0071DC3C /* KOTextView.h */,
+				94FE19B81909C08E0071DC3C /* KOTextView.m */,
+				94FE19981909BF3B0071DC3C /* MainMenu.xib */,
+				94FE199B1909BF3B0071DC3C /* Images.xcassets */,
+				94FE198A1909BF3B0071DC3C /* Supporting Files */,
+			);
+			path = Chaos;
+			sourceTree = "<group>";
+		};
+		94FE198A1909BF3B0071DC3C /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				94FE198B1909BF3B0071DC3C /* Chaos-Info.plist */,
+				94FE198F1909BF3B0071DC3C /* main.m */,
+				94FE19911909BF3B0071DC3C /* Chaos-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		94FE197F1909BF3B0071DC3C /* Chaos */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 94FE19B11909BF3B0071DC3C /* Build configuration list for PBXNativeTarget "Chaos" */;
+			buildPhases = (
+				94FE197C1909BF3B0071DC3C /* Sources */,
+				94FE197D1909BF3B0071DC3C /* Frameworks */,
+				94FE197E1909BF3B0071DC3C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Chaos;
+			productName = Chaos;
+			productReference = 94FE19801909BF3B0071DC3C /* Chaos.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		94FE19781909BF3B0071DC3C /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = KO;
+				LastUpgradeCheck = 0510;
+				ORGANIZATIONNAME = "Steven Degutis";
+			};
+			buildConfigurationList = 94FE197B1909BF3B0071DC3C /* Build configuration list for PBXProject "Chaos" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 94FE19771909BF3B0071DC3C;
+			productRefGroup = 94FE19811909BF3B0071DC3C /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				94FE197F1909BF3B0071DC3C /* Chaos */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		94FE197E1909BF3B0071DC3C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				94FE199C1909BF3B0071DC3C /* Images.xcassets in Resources */,
+				94FE199A1909BF3B0071DC3C /* MainMenu.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		94FE197C1909BF3B0071DC3C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				94FE19971909BF3B0071DC3C /* KOAppDelegate.m in Sources */,
+				94FE19901909BF3B0071DC3C /* main.m in Sources */,
+				94FE19B91909C08E0071DC3C /* KOTextView.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		94FE19981909BF3B0071DC3C /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				94FE19991909BF3B0071DC3C /* Base */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		94FE19AF1909BF3B0071DC3C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		94FE19B01909BF3B0071DC3C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		94FE19B21909BF3B0071DC3C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Chaos/Chaos-Prefix.pch";
+				INFOPLIST_FILE = "Chaos/Chaos-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		94FE19B31909BF3B0071DC3C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Chaos/Chaos-Prefix.pch";
+				INFOPLIST_FILE = "Chaos/Chaos-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		94FE197B1909BF3B0071DC3C /* Build configuration list for PBXProject "Chaos" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				94FE19AF1909BF3B0071DC3C /* Debug */,
+				94FE19B01909BF3B0071DC3C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		94FE19B11909BF3B0071DC3C /* Build configuration list for PBXNativeTarget "Chaos" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				94FE19B21909BF3B0071DC3C /* Debug */,
+				94FE19B31909BF3B0071DC3C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 94FE19781909BF3B0071DC3C /* Project object */;
+}
