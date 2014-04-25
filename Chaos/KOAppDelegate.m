@@ -9,8 +9,8 @@
                             NSFontAttributeName: [NSFont fontWithName:@"Menlo" size:12]};
     
     NSSize s = [@"x" sizeWithAttributes:attrs];
-    s.width = round(s.width);
-    s.height = round(s.height);
+    s.width = ceil(s.width);
+    s.height = ceil(s.height);
     
     NSRect f = [self.window frame];
     f.size.width = s.width * 50;
