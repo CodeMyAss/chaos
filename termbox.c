@@ -1822,8 +1822,7 @@ int main(int argc, char **argv) {
         return 0;
       }
 
-      tb_change_cell(3, 5, ev.key, // DOES NOTHING.
-                     TB_BLUE, TB_WHITE);
+      tb_change_cell(3, 5, ev.ch, TB_BLUE, TB_WHITE);
       tb_present();
 
       break;
