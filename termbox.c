@@ -1800,61 +1800,42 @@ int tb_utf8_unicode_to_char(char *out, uint32_t c)
 /* 	} */
 /* } */
 
-int main(int argc, char **argv)
-{
-	(void) argc; (void) argv;
-	int ret;
+int main(int argc, char **argv) {
+  (void) argc; (void) argv;
+  int ret;
 
-	ret = tb_init();
-	if (ret) {
-		fprintf(stderr, "tb_init() failed with error code %d\n", ret);
-		return 1;
-	}
+  ret = tb_init();
+  if (ret) {
+    fprintf(stderr, "tb_init() failed with error code %d\n", ret);
+    return 1;
+  }
 
-	tb_select_input_mode(TB_INPUT_ESC);
-	struct tb_event ev;
+  tb_select_input_mode(TB_INPUT_ESC);
+  struct tb_event ev;
 
-	tb_clear();
-	/* draw_keyboard(); */
-	tb_present();
-	int ctrlxpressed = 0;
+  tb_clear();
+  tb_change_cell(2, 4, 'a', TB_WHITE, TB_BLUE);
+  /* draw_keyboard(); */
+  tb_present();
+  int ctrlxpressed = 0;
 
-	while (tb_poll_event(&ev)) {
-		switch (ev.type) {
-		case TB_EVENT_KEY:
-			if (ev.key == TB_KEY_CTRL_Q && ctrlxpressed) {
-				tb_shutdown();
-				return 0;
-			}
-			if (ev.key == TB_KEY_CTRL_C && ctrlxpressed) {
-				static int chmap[] = {
-					0,
-					2,
-					1
-				};
-				tb_select_input_mode(chmap[tb_select_input_mode(0)]);
-			}
-			if (ev.key == TB_KEY_CTRL_X)
-				ctrlxpressed = 1;
-			else
-				ctrlxpressed = 0;
-
-			tb_clear();
-			/* draw_keyboard(); */
-			/* dispatch_press(&ev); */
-			/* pretty_print_press(&ev); */
-			tb_present();
-			break;
-		case TB_EVENT_RESIZE:
-			tb_clear();
-			/* draw_keyboard(); */
-			/* pretty_print_resize(&ev); */
-			tb_present();
-			break;
-		default:
-			break;
-		}
-	}
-	tb_shutdown();
-	return 0;
+  while (tb_poll_event(&ev)) {
+    switch (ev.type) {
+    case TB_EVENT_KEY: {
+      tb_shutdown();
+      return 0;
+      break;
+    }
+    case TB_EVENT_RESIZE:
+      tb_clear();
+      /* draw_keyboard(); */
+      /* pretty_print_resize(&ev); */
+      tb_present();
+      break;
+    default:
+      break;
+    }
+  }
+  tb_shutdown();
+  return 0;
 }
