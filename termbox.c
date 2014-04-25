@@ -1801,10 +1801,7 @@ int tb_utf8_unicode_to_char(char *out, uint32_t c)
 /* } */
 
 int main(int argc, char **argv) {
-  (void) argc; (void) argv;
-  int ret;
-
-  ret = tb_init();
+  int ret = tb_init();
   if (ret) {
     fprintf(stderr, "tb_init() failed with error code %d\n", ret);
     return 1;
@@ -1815,15 +1812,20 @@ int main(int argc, char **argv) {
 
   tb_clear();
   tb_change_cell(2, 4, 'a', TB_WHITE, TB_BLUE);
-  /* draw_keyboard(); */
   tb_present();
-  int ctrlxpressed = 0;
 
   while (tb_poll_event(&ev)) {
     switch (ev.type) {
     case TB_EVENT_KEY: {
-      tb_shutdown();
-      return 0;
+      if (ev.key == TB_KEY_CTRL_C) {
+        tb_shutdown();
+        return 0;
+      }
+
+      tb_change_cell(3, 5, ev.key, // DOES NOTHING.
+                     TB_BLUE, TB_WHITE);
+      tb_present();
+
       break;
     }
     case TB_EVENT_RESIZE:
@@ -1836,6 +1838,7 @@ int main(int argc, char **argv) {
       break;
     }
   }
+
   tb_shutdown();
   return 0;
 }
