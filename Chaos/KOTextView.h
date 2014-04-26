@@ -2,4 +2,6 @@
 
 @interface KOTextView : NSView
 
+@property NSMutableAttributedString* str;
+
 @end
