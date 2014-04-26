@@ -39,6 +39,10 @@
 		9443A7AC190C492600C7D543 /* lundump.c in Sources */ = {isa = PBXBuildFile; fileRef = 9443A789190C492600C7D543 /* lundump.c */; };
 		9443A7AD190C492600C7D543 /* lvm.c in Sources */ = {isa = PBXBuildFile; fileRef = 9443A78B190C492600C7D543 /* lvm.c */; };
 		9443A7AE190C492600C7D543 /* lzio.c in Sources */ = {isa = PBXBuildFile; fileRef = 9443A78D190C492600C7D543 /* lzio.c */; };
+		9443A7B0190C513200C7D543 /* init.lua in Resources */ = {isa = PBXBuildFile; fileRef = 9443A7AF190C513200C7D543 /* init.lua */; };
+		9443A7B4190C51EF00C7D543 /* KOWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9443A7B2190C51EF00C7D543 /* KOWindowController.m */; };
+		9443A7B5190C51EF00C7D543 /* Window.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9443A7B3190C51EF00C7D543 /* Window.xib */; };
+		9443A7B7190C530500C7D543 /* window.m in Sources */ = {isa = PBXBuildFile; fileRef = 9443A7B6190C530500C7D543 /* window.m */; };
 		94FE19841909BF3B0071DC3C /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94FE19831909BF3B0071DC3C /* Cocoa.framework */; };
 		94FE19901909BF3B0071DC3C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 94FE198F1909BF3B0071DC3C /* main.m */; };
 		94FE19971909BF3B0071DC3C /* KOAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 94FE19961909BF3B0071DC3C /* KOAppDelegate.m */; };
@@ -105,6 +109,11 @@
 		9443A78C190C492600C7D543 /* lvm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lvm.h; sourceTree = "<group>"; };
 		9443A78D190C492600C7D543 /* lzio.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lzio.c; sourceTree = "<group>"; };
 		9443A78E190C492600C7D543 /* lzio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lzio.h; sourceTree = "<group>"; };
+		9443A7AF190C513200C7D543 /* init.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = init.lua; sourceTree = "<group>"; };
+		9443A7B1190C51EF00C7D543 /* KOWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KOWindowController.h; sourceTree = "<group>"; };
+		9443A7B2190C51EF00C7D543 /* KOWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KOWindowController.m; sourceTree = "<group>"; };
+		9443A7B3190C51EF00C7D543 /* Window.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Window.xib; sourceTree = "<group>"; };
+		9443A7B6190C530500C7D543 /* window.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = window.m; sourceTree = "<group>"; };
 		94FE19801909BF3B0071DC3C /* Chaos.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Chaos.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		94FE19831909BF3B0071DC3C /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		94FE19861909BF3B0071DC3C /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -241,8 +250,13 @@
 				9443A755190C492600C7D543 /* lua */,
 				94FE19951909BF3B0071DC3C /* KOAppDelegate.h */,
 				94FE19961909BF3B0071DC3C /* KOAppDelegate.m */,
+				9443A7B3190C51EF00C7D543 /* Window.xib */,
+				9443A7B1190C51EF00C7D543 /* KOWindowController.h */,
+				9443A7B2190C51EF00C7D543 /* KOWindowController.m */,
+				9443A7B6190C530500C7D543 /* window.m */,
 				94FE19B71909C08E0071DC3C /* KOTextView.h */,
 				94FE19B81909C08E0071DC3C /* KOTextView.m */,
+				9443A7AF190C513200C7D543 /* init.lua */,
 				94FE19981909BF3B0071DC3C /* MainMenu.xib */,
 				94FE199B1909BF3B0071DC3C /* Images.xcassets */,
 				94FE198A1909BF3B0071DC3C /* Supporting Files */,
@@ -314,6 +328,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				94FE199C1909BF3B0071DC3C /* Images.xcassets in Resources */,
+				9443A7B5190C51EF00C7D543 /* Window.xib in Resources */,
+				9443A7B0190C513200C7D543 /* init.lua in Resources */,
 				94FE199A1909BF3B0071DC3C /* MainMenu.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -326,6 +342,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9443A79D190C492600C7D543 /* liolib.c in Sources */,
+				9443A7B4190C51EF00C7D543 /* KOWindowController.m in Sources */,
 				9443A79A190C492600C7D543 /* lfunc.c in Sources */,
 				9443A798190C492600C7D543 /* ldo.c in Sources */,
 				9443A7AB190C492600C7D543 /* ltm.c in Sources */,
@@ -342,6 +359,7 @@
 				9443A78F190C492600C7D543 /* lapi.c in Sources */,
 				9443A797190C492600C7D543 /* ldebug.c in Sources */,
 				9443A7A8190C492600C7D543 /* lstrlib.c in Sources */,
+				9443A7B7190C530500C7D543 /* window.m in Sources */,
 				94FE19901909BF3B0071DC3C /* main.m in Sources */,
 				9443A790190C492600C7D543 /* lauxlib.c in Sources */,
 				9443A7A6190C492600C7D543 /* lstate.c in Sources */,
