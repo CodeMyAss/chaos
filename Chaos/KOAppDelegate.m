@@ -38,6 +38,35 @@
     [self.window setFrame:f display:YES];
     
     [self.window setResizeIncrements:s];
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self setChar:'_' x:1 y:1 fg:[NSColor yellowColor] bg:[NSColor blueColor]];
+        [self setChar:'_' x:0 y:0 fg:[NSColor yellowColor] bg:[NSColor blueColor]];
+        [self setChar:'_' x:1 y:0 fg:[NSColor yellowColor] bg:[NSColor blueColor]];
+    });
+}
+
+- (void) setChar:(char)c x:(int)x y:(int)y fg:(NSColor*)fg bg:(NSColor*)bg {
+    NSDictionary* attrs = @{NSForegroundColorAttributeName: fg,
+                            NSBackgroundColorAttributeName: bg,
+                            NSFontAttributeName: [NSFont fontWithName:@"Menlo" size:12]};
+    
+    NSString* str = [NSString stringWithFormat:@"%c", c];
+    
+    NSSize s = [[self.window contentView] frame].size;
+    
+    CGFloat w = floor(s.width / self.charsize.width);
+//    CGFloat h = floor(s.height / self.charsize.height);
+    
+    int p = (w + 1) * y + x;
+    
+    [self.tv.str setAttributes:attrs range:NSMakeRange(p, 1)];
+    
+//    [self.tv.str replaceCharactersInRange:NSMakeRange(p, 1) withAttributedString:as];
+    
+    [self.tv.str replaceCharactersInRange:NSMakeRange(p, 1) withString:str];
+    
+    [self.tv setNeedsDisplay:YES];
 }
 
 - (void) windowDidResize:(NSNotification *)notification {
