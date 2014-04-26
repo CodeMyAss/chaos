@@ -2,6 +2,7 @@
 
 @interface KOWindowController ()
 
+@property IBOutlet KOTextView *tv;
 @property NSFont* font;
 @property NSSize realCharSize;
 @property NSSize integerCharSize;
@@ -79,16 +80,11 @@
     
     NSString* str = [NSString stringWithFormat:@"%c", c];
     
-    NSSize s = [[self.window contentView] frame].size;
+    int p = ([self windowSize].width + 1) * y + x;
+    NSRange r = NSMakeRange(p, 1);
     
-    CGFloat w = floor(s.width / self.realCharSize.width);
-    //    CGFloat h = floor(s.height / self.charsize.height);
-    
-    int p = (w + 1) * y + x;
-    
-    //    [self.tv.str replaceCharactersInRange:NSMakeRange(p, 1) withAttributedString:as];
-    [self.tv.str setAttributes:attrs range:NSMakeRange(p, 1)];
-    [self.tv.str replaceCharactersInRange:NSMakeRange(p, 1) withString:str];
+    [self.tv.str setAttributes:attrs range:r];
+    [self.tv.str replaceCharactersInRange:r withString:str];
     
     [self.tv setNeedsDisplay:YES];
 }
@@ -108,8 +104,10 @@
     
     [self.tv.str appendAttributedString:astr];
     
+    if (self.windowResizedHandler)
+        self.windowResizedHandler();
+    
     [self.tv setNeedsDisplay:YES];
 }
-
 
 @end

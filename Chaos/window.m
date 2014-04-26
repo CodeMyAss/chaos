@@ -272,7 +272,7 @@ void hotkey_create_instance_metatable(lua_State* L) {
     lua_setfield(L, -2, "__index");  // [..., {__index = {...}}]
 }
 
-int luaopen_hotkey(lua_State * L) {
+int luaopen_window(lua_State * L) {
     lua_newtable(L);                       // [hotkey]
     lua_newtable(L);                       // [hotkey, {}]
     lua_setfield(L, -2, "keys");           // [hotkey]
