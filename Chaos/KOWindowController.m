@@ -24,7 +24,7 @@
                                                  name:NSWindowDidResizeNotification
                                                object:self.window];
     
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [self setChar:'_' x:1 y:1 fg:[NSColor yellowColor] bg:[NSColor blueColor]];
         [self setChar:'_' x:0 y:0 fg:[NSColor yellowColor] bg:[NSColor blueColor]];
         [self setChar:'_' x:1 y:0 fg:[NSColor yellowColor] bg:[NSColor blueColor]];
@@ -103,6 +103,8 @@
                                                                attributes:attrs];
     
     [self.tv.str appendAttributedString:astr];
+    
+    // TODO: this is called a few more times than necessary, so we should call the callback only once per actual size change (or something)
     
     if (self.windowResizedHandler)
         self.windowResizedHandler();
