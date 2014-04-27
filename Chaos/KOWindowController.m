@@ -24,11 +24,11 @@
                                                  name:NSWindowDidResizeNotification
                                                object:self.window];
     
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [self setChar:'_' x:1 y:1 fg:[NSColor yellowColor] bg:[NSColor blueColor]];
-        [self setChar:'_' x:0 y:0 fg:[NSColor yellowColor] bg:[NSColor blueColor]];
-        [self setChar:'_' x:1 y:0 fg:[NSColor yellowColor] bg:[NSColor blueColor]];
-    });
+//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//        [self setChar:'_' x:1 y:1 fg:[NSColor yellowColor] bg:[NSColor blueColor]];
+//        [self setChar:'_' x:0 y:0 fg:[NSColor yellowColor] bg:[NSColor blueColor]];
+//        [self setChar:'_' x:1 y:0 fg:[NSColor yellowColor] bg:[NSColor blueColor]];
+//    });
     
     [self.window makeKeyAndOrderFront:nil];
     [self resizeWindowTo:NSMakeSize(50, 10)];
@@ -81,6 +81,7 @@
     NSString* str = [NSString stringWithFormat:@"%c", c];
     
     int p = ([self windowSize].width + 1) * y + x;
+    NSLog(@"%f %d %d %d", [self windowSize].width, y, x, p);
     NSRange r = NSMakeRange(p, 1);
     
     [self.tv.str setAttributes:attrs range:r];
