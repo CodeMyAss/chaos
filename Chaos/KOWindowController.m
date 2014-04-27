@@ -24,12 +24,6 @@
                                                  name:NSWindowDidResizeNotification
                                                object:self.window];
     
-//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-//        [self setChar:'_' x:1 y:1 fg:[NSColor yellowColor] bg:[NSColor blueColor]];
-//        [self setChar:'_' x:0 y:0 fg:[NSColor yellowColor] bg:[NSColor blueColor]];
-//        [self setChar:'_' x:1 y:0 fg:[NSColor yellowColor] bg:[NSColor blueColor]];
-//    });
-    
     [self.window makeKeyAndOrderFront:nil];
     [self resizeWindowTo:NSMakeSize(50, 10)];
 }
@@ -73,17 +67,19 @@
     return NSMakeSize(w, h);
 }
 
-- (void) setChar:(char)c x:(int)x y:(int)y fg:(NSColor*)fg bg:(NSColor*)bg {
+- (void) setChar:(unichar)c x:(int)x y:(int)y fg:(NSColor*)fg bg:(NSColor*)bg {
     NSDictionary* attrs = @{NSForegroundColorAttributeName: fg,
                             NSBackgroundColorAttributeName: bg,
                             NSFontAttributeName: self.font};
     
-    NSString* str = [NSString stringWithFormat:@"%c", c];
+    NSString* str = [NSString stringWithFormat:@"%C", c];
     
     int p = ([self windowSize].width + 1) * y + x;
-    NSLog(@"%f %d %d %d", [self windowSize].width, y, x, p);
-    NSRange r = NSMakeRange(p, 1);
     
+    if (p >= [self.tv.str length])
+        return; // nope.
+    
+    NSRange r = NSMakeRange(p, 1);
     [self.tv.str setAttributes:attrs range:r];
     [self.tv.str replaceCharactersInRange:r withString:str];
     
@@ -97,13 +93,14 @@
     
     NSDictionary* attrs = @{NSFontAttributeName: self.font};
     
-    NSString* ms = [@"" stringByPaddingToLength:(s.width + 1) * s.height
-                                     withString:@" " startingAtIndex:0];
+    for (int y = 0; y < s.height; y++) {
+        for (int x = 0; x < s.width; x++) {
+            [[self.tv.str mutableString] appendString:@" "];
+        }
+        [[self.tv.str mutableString] appendString:@"\n"];
+    }
     
-    NSAttributedString* astr = [[NSAttributedString alloc] initWithString:ms
-                                                               attributes:attrs];
-    
-    [self.tv.str appendAttributedString:astr];
+    [self.tv.str setAttributes:attrs range:NSMakeRange(0, self.tv.str.length)];
     
     // TODO: this is called a few more times than necessary, so we should call the callback only once per actual size change (or something)
     

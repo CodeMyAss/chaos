@@ -41,8 +41,8 @@ static int win_set(lua_State *L) {
     void** ud = lua_touserdata(L, 1);
     KOWindowController* wc = (__bridge KOWindowController*)*ud;
     
-    const char* str = lua_tostring(L, 2);
-    int c = str[0];
+    NSString* str = [NSString stringWithUTF8String: lua_tostring(L, 2)];
+    unichar c = [str characterAtIndex:0];
     
     int x = lua_tonumber(L, 3);
     int y = lua_tonumber(L, 4);
