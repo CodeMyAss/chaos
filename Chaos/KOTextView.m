@@ -11,8 +11,10 @@
 
 - (void)drawRect:(NSRect)dirtyRect {
     [super drawRect:dirtyRect];
+//    [self.str drawInRect:[self bounds]];
+//    return;
     
-    NSString* line1 = @"jello_";
+    NSString* line1 = @"joll_";
 //    NSString* line1 = @"┌───┐";
     NSString* line2 = @"│   │";
     NSString* line3 = @"│   │";
@@ -29,21 +31,32 @@
     
     NSRect r = [aline1 boundingRectWithSize:NSMakeSize(200, 200) options:0];
     
-    [aline1 drawAtPoint:NSMakePoint(5, [self bounds].size.height - 18)];
-    [aline1 drawAtPoint:NSMakePoint(5, [self bounds].size.height - 36)];
+//    [aline1 drawAtPoint:NSMakePoint(5, [self bounds].size.height - 18)];
+//    [aline2 drawAtPoint:NSMakePoint(5, [self bounds].size.height - 36 + 3)];
+//    [aline3 drawAtPoint:NSMakePoint(5, [self bounds].size.height - 54 + 6)];
+//    [aline4 drawAtPoint:NSMakePoint(5, [self bounds].size.height - 72 + 9)];
     
-    NSLog(@"%@", NSStringFromRect(r));
+    
+    
+    CGContextRef context = [[NSGraphicsContext currentContext] graphicsPort];
+    CGContextSetTextMatrix(context, CGAffineTransformIdentity);
+    
+    CTLineRef line;
+    
+    line = CTLineCreateWithAttributedString((CFAttributedStringRef)aline1);
+    CGContextSetTextPosition(context, 10.0, [self bounds].size.height - 18);
+    CTLineDraw(line, context);
+    CFRelease(line);
+    
+    line = CTLineCreateWithAttributedString((CFAttributedStringRef)aline1);
+    CGContextSetTextPosition(context, 10.0, [self bounds].size.height - 36 + 3);
+    CTLineDraw(line, context);
+    CFRelease(line);
     
     return;
     
     
     
-    CGContextRef context = [[NSGraphicsContext currentContext] graphicsPort];
-    
-    // Flip the coordinate system
-    CGContextSetTextMatrix(context, CGAffineTransformIdentity);
-//    CGContextTranslateCTM(context, 0, self.bounds.size.height);
-//    CGContextScaleCTM(context, 1.0, -1.0);
     
     // Create a path to render text in
     CGMutablePathRef path = CGPathCreateMutable();
@@ -63,8 +76,6 @@
     CFRelease(frame);
     CFRelease(path);
     CFRelease(framesetter);
-    
-//    [self.str drawInRect:[self bounds]];
 }
 
 @end
