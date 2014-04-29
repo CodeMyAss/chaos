@@ -25,7 +25,7 @@ local function redraw()
         end
     end
     
-    window:setw("hello", 1, 1, fg, bg)
+    window:setw("hello world!", 1, 1, fg, bg)
 end
 
 window:resized(function()

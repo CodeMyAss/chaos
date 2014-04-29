@@ -20,7 +20,7 @@
     
     [self usePadding:NSMakeSize(5, 5)];
     [self useFont:[NSFont fontWithName:@"Menlo" size:12]];
-    [self useGridSize:NSMakeSize(49, 5)];
+    [self useGridSize:NSMakeSize(80, 24)];
 }
 
 - (void) usePadding:(NSSize)size {
