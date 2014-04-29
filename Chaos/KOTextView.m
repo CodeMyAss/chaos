@@ -38,8 +38,18 @@
     BOOL cmd = ([theEvent modifierFlags] & NSCommandKeyMask) != 0;
     BOOL alt = ([theEvent modifierFlags] & NSAlternateKeyMask) != 0;
     
+    NSString* str = [theEvent charactersIgnoringModifiers];
+    
+    if ([str characterAtIndex:0] == 127)
+        str = @"delete";
+    
+    if ([str characterAtIndex:0] == 13)
+        str = @"return";
+    
+//    NSLog(@"%d", [str characterAtIndex:0]);
+    
     if (self.keyDownHandler)
-        self.keyDownHandler(ctrl, alt, cmd, [theEvent charactersIgnoringModifiers]);
+        self.keyDownHandler(ctrl, alt, cmd, str);
 }
 
 - (void) useFont:(NSFont*)font {
