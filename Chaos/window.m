@@ -62,13 +62,13 @@ static int win_getsize(lua_State *L) {
 static int win_set(lua_State *L) {
     KOWindowController* wc = (__bridge KOWindowController*)*(void**)lua_touserdata(L, 1);
     
-    NSString* c = [NSString stringWithUTF8String: lua_tostring(L, 2)];
+    NSString* c = [NSString stringWithFormat:@"%C", (unsigned short)lua_tonumber(L, 2)];
     int x = lua_tonumber(L, 3);
     int y = lua_tonumber(L, 4);
     NSColor* fg = SDColorFromHex(lua_tostring(L, 5));
     NSColor* bg = SDColorFromHex(lua_tostring(L, 6));
     
-    [wc setChar:c x:x y:y fg:fg bg:bg];
+    [wc setStr:c x:x y:y fg:fg bg:bg];
     
     return 0;
 }

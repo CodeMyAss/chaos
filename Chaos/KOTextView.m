@@ -147,10 +147,6 @@
     }
 }
 
-- (void) setChar:(NSString*)c x:(int)x y:(int)y fg:(NSColor*)fg bg:(NSColor*)bg {
-    [self setStr:[c substringToIndex:1] x:x y:y fg:fg bg:bg];
-}
-
 - (void) setStr:(NSString*)str x:(int)x y:(int)y fg:(NSColor*)fg bg:(NSColor*)bg {
     NSUInteger i = x + y * self.cols;
     NSRange r = NSMakeRange(i, [str length]);
