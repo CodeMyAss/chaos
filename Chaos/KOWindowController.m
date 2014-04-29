@@ -1,5 +1,4 @@
 #import "KOWindowController.h"
-#import "KOTextView.h"
 
 @interface KOWindowController ()
 
@@ -25,6 +24,10 @@
 
 - (void) usePadding:(NSSize)size {
     self.padding = size;
+}
+
+- (void) useKeyDownHandler:(KOKeyDownHandler)handler {
+    self.tv.keyDownHandler = handler;
 }
 
 - (void) windowDidResize:(NSNotification *)notification {

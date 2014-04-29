@@ -26,6 +26,32 @@ static int win_resized(lua_State *L) {
     return 0;
 }
 
+// args: [win, fn(t)]
+static int win_keydown(lua_State *L) {
+    void** ud = lua_touserdata(L, 1);
+    KOWindowController* wc = (__bridge KOWindowController*)*ud;
+    
+    int i = luaL_ref(L, LUA_REGISTRYINDEX);
+    
+    [wc useKeyDownHandler:^(BOOL ctrl, BOOL alt, BOOL cmd, NSString *str) {
+        lua_rawgeti(L, LUA_REGISTRYINDEX, i);
+        
+        lua_newtable(L);
+        lua_pushboolean(L, ctrl);
+        lua_setfield(L, -2, "ctrl");
+        lua_pushboolean(L, alt);
+        lua_setfield(L, -2, "alt");
+        lua_pushboolean(L, cmd);
+        lua_setfield(L, -2, "cmd");
+        lua_pushstring(L, [str UTF8String]);
+        lua_setfield(L, -2, "key");
+        
+        lua_pcall(L, 1, 0, 0);
+    }];
+    
+    return 0;
+}
+
 // args: [win]
 static int win_getsize(lua_State *L) {
     void** ud = lua_touserdata(L, 1);
@@ -68,8 +94,12 @@ static int win_setw(lua_State *L) {
 }
 
 static const luaL_Reg winlib[] = {
-    {"getsize", win_getsize},
+    // event handlers
     {"resized", win_resized},
+    {"keydown", win_keydown},
+    
+    // methods
+    {"getsize", win_getsize},
     {"set", win_set},
     {"setw", win_setw},
     {NULL, NULL}

@@ -28,8 +28,29 @@ local function redraw()
     window:setw("hello world!", 1, 1, fg, bg)
 end
 
+local x = 1
+local y = 2
+
 window:resized(function()
+    x = 1
+    y = 2
     redraw()
 end)
 
+window:keydown(function(t)
+    local w, h = window:getsize()
+
+    local fg = "ffff00"
+    local bg = "0000ff"
+
+    window:set(t.key, x, y, fg, bg)
+    x = x + 1
+    if x == w - 1 then
+        x = 1;
+        y = y + 1
+    end
+end)
+
 redraw()
+
+print("ready")

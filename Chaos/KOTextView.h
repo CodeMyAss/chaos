@@ -1,5 +1,7 @@
 #import <Cocoa/Cocoa.h>
 
+typedef void(^KOKeyDownHandler)(BOOL ctrl, BOOL alt, BOOL cmd, NSString* str);
+
 @interface KOTextView : NSView
 
 @property (readonly) CGFloat charWidth;
@@ -7,6 +9,8 @@
 
 @property (readonly) int rows;
 @property (readonly) int cols;
+
+@property (copy) KOKeyDownHandler keyDownHandler;
 
 - (void) useFont:(NSFont*)font;
 - (void) useGridSize:(NSSize)size;

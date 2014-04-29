@@ -31,6 +31,17 @@
     return self;
 }
 
+- (BOOL) acceptsFirstResponder { return YES; }
+
+- (void) keyDown:(NSEvent *)theEvent {
+    BOOL ctrl = ([theEvent modifierFlags] & NSControlKeyMask) != 0;
+    BOOL cmd = ([theEvent modifierFlags] & NSCommandKeyMask) != 0;
+    BOOL alt = ([theEvent modifierFlags] & NSAlternateKeyMask) != 0;
+    
+    if (self.keyDownHandler)
+        self.keyDownHandler(ctrl, alt, cmd, [theEvent charactersIgnoringModifiers]);
+}
+
 - (void) useFont:(NSFont*)font {
     self.defaultAttrs[NSFontAttributeName] = font;
     
