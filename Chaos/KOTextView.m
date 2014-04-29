@@ -85,41 +85,25 @@
     
     // we have to manually draw backgrounds :/
     
-    CFArrayRef lines = CTFrameGetLines(textFrame);
-    
-    CGPoint origins[CFArrayGetCount(lines)];//the origins of each line at the baseline
-    CTFrameGetLineOrigins(textFrame, CFRangeMake(0, 0), origins);
-    
-    for (int lineIndex = 0; lineIndex < CFArrayGetCount(lines); lineIndex++) {
-        CTLineRef line = CFArrayGetValueAtIndex(lines, lineIndex);
-        CFArrayRef runs = CTLineGetGlyphRuns(line);
-        
-        for (int runIndex = 0; runIndex < CFArrayGetCount(runs); runIndex++) {
-            CTRunRef run = CFArrayGetValueAtIndex(runs, runIndex);
-            
-            NSDictionary* attrs = (__bridge NSDictionary*)CTRunGetAttributes(run);
-            NSColor* bgColor = [attrs objectForKey:NSBackgroundColorAttributeName];
-            
-            if (bgColor) {
-                CGRect runBounds;
-                
-                CGFloat ascent;
-                CGFloat descent;
-                runBounds.size.width = CTRunGetTypographicBounds(run, CFRangeMake(0, 0), &ascent, &descent, NULL);
-                runBounds.size.height = ascent + descent;
-                
-                CGFloat xOffset = CTLineGetOffsetForStringIndex(line, CTRunGetStringRange(run).location, NULL);
-                
-                runBounds.origin.x = origins[lineIndex].x + bounds.origin.x + xOffset;
-                runBounds.origin.y = origins[lineIndex].y + bounds.origin.y;
-                runBounds.origin.y -= descent;
-                runBounds = NSIntegralRect(runBounds);
-                
-                CGContextSetFillColorWithColor(ctx, [bgColor CGColor]);
-                CGContextFillRect(ctx, runBounds);
-            }
-        }
-    }
+    [self.buffer enumerateAttribute:NSBackgroundColorAttributeName
+                            inRange:NSMakeRange(0, [self.buffer length])
+                            options:NSAttributedStringEnumerationLongestEffectiveRangeNotRequired
+                         usingBlock:^(NSColor* color, NSRange range, BOOL *stop) {
+                             if (color) {
+                                 for (NSUInteger i = range.location; i < NSMaxRange(range); i++) {
+                                     NSRect bgRect;
+                                     bgRect.origin.x = (i % self.cols) * self.charWidth;
+                                     bgRect.origin.y = NSMaxY(bounds) - (((i / self.cols) + 1) * self.charHeight);
+                                     bgRect.size.width = self.charWidth;
+                                     bgRect.size.height = self.charHeight;
+                                     
+                                     bgRect = NSIntegralRect(bgRect);
+                                     
+                                     [color setFill];
+                                     [NSBezierPath fillRect:bgRect];
+                                 }
+                             }
+                         }];
     
     // okay, now draw the actual text (just one line! ha!)
     
