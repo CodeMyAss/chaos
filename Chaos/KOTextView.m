@@ -92,6 +92,7 @@
                 runBounds.origin.x = origins[lineIndex].x + bounds.origin.x + xOffset;
                 runBounds.origin.y = origins[lineIndex].y + bounds.origin.y;
                 runBounds.origin.y -= descent;
+                runBounds = NSIntegralRect(runBounds);
                 
                 CGContextSetFillColorWithColor(ctx, [bgColor CGColor]);
                 CGContextFillRect(ctx, runBounds);
