@@ -1,159 +1,137 @@
 #import "KOTextView.h"
+#import <QuartzCore/QuartzCore.h>
+
+
+@interface KOTextView ()
+
+@property (readwrite) CGFloat charWidth;
+@property (readwrite) CGFloat charHeight;
+
+@property (readwrite) int rows;
+@property (readwrite) int cols;
+
+@property NSMutableAttributedString* buffer;
+
+@property NSMutableDictionary* defaultAttrs;
+
+@end
 
 @implementation KOTextView
 
 - (id) initWithFrame:(NSRect)frameRect {
     if (self = [super initWithFrame:frameRect]) {
-        self.str = [[NSMutableAttributedString alloc] init];
+        self.buffer = [[NSMutableAttributedString alloc] init];
+        self.defaultAttrs = [NSMutableDictionary dictionary];
+        
+        NSMutableParagraphStyle* pstyle = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
+        [pstyle setLineBreakMode:NSLineBreakByCharWrapping];
+        
+        self.defaultAttrs[NSParagraphStyleAttributeName] = pstyle;
     }
     return self;
 }
 
-- (void)drawRect:(NSRect)dirtyRect {
-    [super drawRect:dirtyRect];
-//    [self.str drawInRect:[self bounds]];
-//    return;
+- (void) useFont:(NSFont*)font {
+    self.defaultAttrs[NSFontAttributeName] = font;
     
-    NSString* line1 = @"joll_";
-//    NSString* line1 = @"┌───┐";
-    NSString* line2 = @"│   │";
-    NSString* line3 = @"│   │";
-    NSString* line4 = @"└───┘";
+    NSAttributedString* as = [[NSAttributedString alloc] initWithString:@"x" attributes:self.defaultAttrs];
+    CTFramesetterRef frameSetter = CTFramesetterCreateWithAttributedString((__bridge CFAttributedStringRef)as);
+    CGSize suggestedSize = CTFramesetterSuggestFrameSizeWithConstraints(frameSetter, CFRangeMake(0, 1), NULL, CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX), NULL);
+    CFRelease(frameSetter);
     
-    NSDictionary* attrs = @{NSForegroundColorAttributeName: [NSColor blueColor],
-                            NSBackgroundColorAttributeName: [NSColor yellowColor],
-                            NSFontAttributeName: [NSFont fontWithName:@"Menlo" size:12]};
+    self.charWidth = suggestedSize.width;
+    self.charHeight = suggestedSize.height;
+}
+
+- (NSSize) realViewSize {
+    return NSMakeSize(self.charWidth * self.cols,
+                      self.charHeight * self.rows);
+}
+
+- (void) drawRect:(NSRect)dirtyRect {
+    CGContextRef ctx = [[NSGraphicsContext currentContext] graphicsPort];
+    CGContextSetTextMatrix(ctx, CGAffineTransformIdentity);
     
-    NSAttributedString* aline1 = [[NSAttributedString alloc] initWithString:line1 attributes:attrs];
-    NSAttributedString* aline2 = [[NSAttributedString alloc] initWithString:line2 attributes:attrs];
-    NSAttributedString* aline3 = [[NSAttributedString alloc] initWithString:line3 attributes:attrs];
-    NSAttributedString* aline4 = [[NSAttributedString alloc] initWithString:line4 attributes:attrs];
+    NSRect bounds = [self bounds];
+    bounds.size = [self realViewSize];
     
-    NSRect r = [aline1 boundingRectWithSize:NSMakeSize(200, 200) options:0];
+    CTFramesetterRef framesetter = CTFramesetterCreateWithAttributedString((__bridge CFAttributedStringRef)self.buffer);
     
-//    [aline1 drawAtPoint:NSMakePoint(5, [self bounds].size.height - 18)];
-//    [aline2 drawAtPoint:NSMakePoint(5, [self bounds].size.height - 36 + 3)];
-//    [aline3 drawAtPoint:NSMakePoint(5, [self bounds].size.height - 54 + 6)];
-//    [aline4 drawAtPoint:NSMakePoint(5, [self bounds].size.height - 72 + 9)];
-    
-    
-    
-    CGContextRef context = [[NSGraphicsContext currentContext] graphicsPort];
-    CGContextSetTextMatrix(context, CGAffineTransformIdentity);
-    
-    CTLineRef line;
-    
-    line = CTLineCreateWithAttributedString((CFAttributedStringRef)aline1);
-    CGContextSetTextPosition(context, 10.0, [self bounds].size.height - 18);
-    CTLineDraw(line, context);
-    CFRelease(line);
-    
-    line = CTLineCreateWithAttributedString((CFAttributedStringRef)aline1);
-    CGContextSetTextPosition(context, 10.0, [self bounds].size.height - 36 + 3);
-    CTLineDraw(line, context);
-    CFRelease(line);
-    
-    return;
-    
-    
-    
-    
-    // Create a path to render text in
     CGMutablePathRef path = CGPathCreateMutable();
-    CGPathAddRect(path, NULL, self.bounds );
+    CGPathAddRect(path, NULL, bounds);
     
-    // An attributed string containing the text to render
-    NSAttributedString* attString = self.str;
+    CTFrameRef textFrame = CTFramesetterCreateFrame(framesetter, CFRangeMake(0,0), path, NULL);
     
-    // create the framesetter and render text
-    CTFramesetterRef framesetter = CTFramesetterCreateWithAttributedString((CFAttributedStringRef)attString);
-    CTFrameRef frame = CTFramesetterCreateFrame(framesetter,
-                                                CFRangeMake(0, [attString length]), path, NULL);
+    // we have to manually draw backgrounds :/
     
-    CTFrameDraw(frame, context);
+    CFArrayRef lines = CTFrameGetLines(textFrame);
     
-    // Clean up
-    CFRelease(frame);
-    CFRelease(path);
-    CFRelease(framesetter);
-}
-
-@end
-
-
-
-
-
-
-
-#import <QuartzCore/QuartzCore.h>
-
-@interface SDTextLayer : CATextLayer
-@end
-
-@implementation SDTextLayer
-
-- (void) drawInContext:(CGContextRef)ctx {
-    CGContextSetFillColorWithColor(ctx, self.backgroundColor);
-    CGContextFillRect(ctx, [self bounds]);
-    CGContextSetShouldSmoothFonts(ctx, true);
+    CGPoint origins[CFArrayGetCount(lines)];//the origins of each line at the baseline
+    CTFrameGetLineOrigins(textFrame, CFRangeMake(0, 0), origins);
     
-    [super drawInContext:ctx];
-}
-
-@end
-
-
-@interface SDView : NSView
-@end
-
-@implementation SDView
-
-- (id) initWithFrame:(NSRect)frameRect {
-    if (self = [super initWithFrame:frameRect]) {
-        [self setLayer:[CALayer layer]];
-        [self setWantsLayer:YES];
-    }
-    return self;
-}
-
-- (void) awakeFromNib {
-    [super awakeFromNib];
-    
-    int c = 'a';
-    
-    NSRect r = [@"x" boundingRectWithSize:NSMakeSize(200, 200) options:0 attributes:@{NSFontAttributeName: [NSFont fontWithName:@"Menlo" size:12]}];
-    
-    int w = (r.size.width + r.origin.x);
-    int h = (r.size.height + r.origin.y);
-    
-    NSLog(@"%d, %d", w, h);
-    
-    //    w = r.size.width + r.origin.x;
-    //    h = r.size.height + r.origin.y;
-    
-    for (int y = 0; y < 10; y++) {
-        for (int x = 0; x < 30; x++) {
-            CATextLayer* l = [SDTextLayer layer];
+    for (int lineIndex = 0; lineIndex < CFArrayGetCount(lines); lineIndex++) {
+        CTLineRef line = CFArrayGetValueAtIndex(lines, lineIndex);
+        CFArrayRef runs = CTLineGetGlyphRuns(line);
+        
+        for (int runIndex = 0; runIndex < CFArrayGetCount(runs); runIndex++) {
+            CTRunRef run = CFArrayGetValueAtIndex(runs, runIndex);
             
-            l.frame = NSMakeRect(x * w, y * h, w, h);
-            l.font = (__bridge CFTypeRef)[NSFont fontWithName:@"Menlo" size:12];
-            l.fontSize = 12;
-            l.foregroundColor = [NSColor blackColor].CGColor;
-            l.backgroundColor = [NSColor whiteColor].CGColor;
+            NSDictionary* attrs = (__bridge NSDictionary*)CTRunGetAttributes(run);
+            NSColor* bgColor = [attrs objectForKey:NSBackgroundColorAttributeName];
             
-            l.backgroundColor = (rand() % 10 > 5 ? [NSColor yellowColor] : [NSColor whiteColor]).CGColor;
-            
-            //            l.foregroundColor = [NSColor yellowColor].CGColor;
-            //            l.backgroundColor = [NSColor blueColor].CGColor;
-            l.string = [NSString stringWithFormat:@"%c", c];
-            [[self layer] addSublayer:l];
-            
-            //            if (c == '_') c = 'a' - 1;
-            if (++c == 'z' + 1) c = 'a';
+            if (bgColor) {
+                CGRect runBounds;
+                
+                CGFloat ascent;
+                CGFloat descent;
+                runBounds.size.width = CTRunGetTypographicBounds(run, CFRangeMake(0, 0), &ascent, &descent, NULL);
+                runBounds.size.height = ascent + descent;
+                
+                CGFloat xOffset = CTLineGetOffsetForStringIndex(line, CTRunGetStringRange(run).location, NULL);
+                
+                runBounds.origin.x = origins[lineIndex].x + bounds.origin.x + xOffset;
+                runBounds.origin.y = origins[lineIndex].y + bounds.origin.y;
+                runBounds.origin.y -= descent;
+                
+                CGContextSetFillColorWithColor(ctx, [bgColor CGColor]);
+                CGContextFillRect(ctx, runBounds);
+            }
         }
     }
     
+    // okay, now draw the actual text (just one line! ha!)
+    
+    CTFrameDraw(textFrame, ctx);
+    
+    CFRelease(framesetter);
+    CFRelease(textFrame);
+    CGPathRelease(path);
+}
+
+- (void) useGridSize:(NSSize)size {
+    self.cols = size.width;
+    self.rows = size.height;
+    
+    // whenever we resize the grid, (if change > 0) just pad to length with " " and re-font the newly added text
+    
+    NSUInteger newBufferLen = self.cols * self.rows;
+    NSUInteger oldLen = [self.buffer length];
+    NSInteger diff = newBufferLen - oldLen;
+    
+    if (diff > 0) {
+        NSString* padding = [@"" stringByPaddingToLength:diff withString:@" " startingAtIndex:0];
+        [[self.buffer mutableString] appendString:padding];
+        [self.buffer setAttributes:self.defaultAttrs range:NSMakeRange(oldLen, diff)];
+    }
+}
+
+- (void) setChar:(NSString*)c x:(int)x y:(int)y fg:(NSColor*)fg bg:(NSColor*)bg {
+    NSUInteger i = x + y * self.cols;
+    NSRange r = NSMakeRange(i, 1);
+    [self.buffer replaceCharactersInRange:r withString:c];
+    if (fg) [self.buffer addAttribute:NSForegroundColorAttributeName value:fg range:r];
+    if (bg) [self.buffer addAttribute:NSBackgroundColorAttributeName value:bg range:r];
+    [self setNeedsDisplay:YES];
 }
 
 @end
