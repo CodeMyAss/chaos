@@ -51,10 +51,27 @@ static int win_set(lua_State *L) {
     return 0;
 }
 
+// args: [win, str, x, y, fg, bg]
+static int win_setw(lua_State *L) {
+    void** ud = lua_touserdata(L, 1);
+    KOWindowController* wc = (__bridge KOWindowController*)*ud;
+    
+    NSString* c = [NSString stringWithUTF8String: lua_tostring(L, 2)];
+    int x = lua_tonumber(L, 3);
+    int y = lua_tonumber(L, 4);
+    NSColor* fg = SDColorFromHex(lua_tostring(L, 5));
+    NSColor* bg = SDColorFromHex(lua_tostring(L, 6));
+    
+    [wc setStr:c x:x y:y fg:fg bg:bg];
+    
+    return 0;
+}
+
 static const luaL_Reg winlib[] = {
     {"getsize", win_getsize},
     {"resized", win_resized},
     {"set", win_set},
+    {"setw", win_setw},
     {NULL, NULL}
 };
 
