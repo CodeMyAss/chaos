@@ -41,11 +41,6 @@
     
     if (self.windowResizedHandler)
         self.windowResizedHandler();
-    
-//    [self.tv setChar:@"x" x:0 y:0 fg:[NSColor yellowColor] bg:[NSColor blueColor]];
-//    [self.tv setChar:@"x" x:self.tv.cols-1 y:0 fg:[NSColor yellowColor] bg:[NSColor blueColor]];
-//    [self.tv setChar:@"x" x:0 y:self.tv.rows-1 fg:[NSColor yellowColor] bg:[NSColor blueColor]];
-//    [self.tv setChar:@"x" x:self.tv.cols-1 y:self.tv.rows-1 fg:[NSColor yellowColor] bg:[NSColor blueColor]];
 }
 
 - (void) useFont:(NSFont*)font {

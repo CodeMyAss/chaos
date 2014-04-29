@@ -24,6 +24,12 @@ local function redraw()
             window:set(" ", x, y, fg, bg)
         end
     end
+    
+    window:set("h", 1, 1, fg, bg)
+    window:set("e", 2, 1, fg, bg)
+    window:set("l", 3, 1, fg, bg)
+    window:set("l", 4, 1, fg, bg)
+    window:set("o", 5, 1, fg, bg)
 end
 
 window:resized(function()
