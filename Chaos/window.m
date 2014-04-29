@@ -13,8 +13,7 @@ static NSColor* SDColorFromHex(const char* hex) {
 
 // args: [win, fn]
 static int win_resized(lua_State *L) {
-    void** ud = lua_touserdata(L, 1);
-    KOWindowController* wc = (__bridge KOWindowController*)*ud;
+    KOWindowController* wc = (__bridge KOWindowController*)*(void**)lua_touserdata(L, 1);
     
     int i = luaL_ref(L, LUA_REGISTRYINDEX);
     
@@ -28,8 +27,7 @@ static int win_resized(lua_State *L) {
 
 // args: [win, fn(t)]
 static int win_keydown(lua_State *L) {
-    void** ud = lua_touserdata(L, 1);
-    KOWindowController* wc = (__bridge KOWindowController*)*ud;
+    KOWindowController* wc = (__bridge KOWindowController*)*(void**)lua_touserdata(L, 1);
     
     int i = luaL_ref(L, LUA_REGISTRYINDEX);
     
@@ -54,8 +52,7 @@ static int win_keydown(lua_State *L) {
 
 // args: [win]
 static int win_getsize(lua_State *L) {
-    void** ud = lua_touserdata(L, 1);
-    KOWindowController* wc = (__bridge KOWindowController*)*ud;
+    KOWindowController* wc = (__bridge KOWindowController*)*(void**)lua_touserdata(L, 1);
     lua_pushnumber(L, [wc cols]);
     lua_pushnumber(L, [wc rows]);
     return 2;
@@ -63,8 +60,7 @@ static int win_getsize(lua_State *L) {
 
 // args: [win, char, x, y, fg, bg]
 static int win_set(lua_State *L) {
-    void** ud = lua_touserdata(L, 1);
-    KOWindowController* wc = (__bridge KOWindowController*)*ud;
+    KOWindowController* wc = (__bridge KOWindowController*)*(void**)lua_touserdata(L, 1);
     
     NSString* c = [NSString stringWithUTF8String: lua_tostring(L, 2)];
     int x = lua_tonumber(L, 3);
@@ -79,8 +75,7 @@ static int win_set(lua_State *L) {
 
 // args: [win, str, x, y, fg, bg]
 static int win_setw(lua_State *L) {
-    void** ud = lua_touserdata(L, 1);
-    KOWindowController* wc = (__bridge KOWindowController*)*ud;
+    KOWindowController* wc = (__bridge KOWindowController*)*(void**)lua_touserdata(L, 1);
     
     NSString* c = [NSString stringWithUTF8String: lua_tostring(L, 2)];
     int x = lua_tonumber(L, 3);
