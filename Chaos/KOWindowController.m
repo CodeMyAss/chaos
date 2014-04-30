@@ -42,8 +42,10 @@
     
     [self useGridSize:NSMakeSize(newGridWidth, newGridHeight)];
     
-    if (self.windowResizedHandler)
-        self.windowResizedHandler();
+    [self.tv postponeRedraws:^{
+        if (self.windowResizedHandler)
+            self.windowResizedHandler();
+    }];
 }
 
 - (void) useFont:(NSFont*)font {

@@ -1,14 +1,29 @@
 #import "lua/lauxlib.h"
 #import "KOWindowController.h"
 
+static NSMutableDictionary* colors;
+
 static NSColor* SDColorFromHex(const char* hex) {
-    NSScanner* scanner = [NSScanner scannerWithString: [NSString stringWithUTF8String: hex]];
-    unsigned colorCode = 0;
-    [scanner scanHexInt:&colorCode];
-    return [NSColor colorWithCalibratedRed: (colorCode >> 16) & 0xFF / 0xFF
-                                     green: (colorCode >> 8) & 0xFF / 0xFF
-                                      blue: (colorCode) & 0xFF / 0xFF
-                                     alpha: 1.0];
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        colors = [NSMutableDictionary dictionary];
+    });
+    
+    NSString* hexString = [NSString stringWithUTF8String: hex];
+    NSColor* color = [colors objectForKey:hexString];
+    
+    if (!color) {
+        NSScanner* scanner = [NSScanner scannerWithString: hexString];
+        unsigned colorCode = 0;
+        [scanner scanHexInt:&colorCode];
+        color = [NSColor colorWithCalibratedRed: (colorCode >> 16) & 0xFF / 0xFF
+                                          green: (colorCode >> 8) & 0xFF / 0xFF
+                                           blue: (colorCode) & 0xFF / 0xFF
+                                          alpha: 1.0];
+        [colors setObject:color forKey:hexString];
+    }
+    
+    return color;
 }
 
 // args: [win, fn]

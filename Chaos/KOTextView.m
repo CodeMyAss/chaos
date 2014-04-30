@@ -11,8 +11,9 @@
 @property (readwrite) int cols;
 
 @property NSMutableAttributedString* buffer;
-
 @property NSMutableDictionary* defaultAttrs;
+
+@property BOOL postponeRedraws;
 
 @end
 
@@ -85,6 +86,9 @@
 }
 
 - (void) drawRect:(NSRect)dirtyRect {
+    if (self.postponeRedraws)
+        return;
+    
     CGContextRef ctx = [[NSGraphicsContext currentContext] graphicsPort];
     CGContextSetTextMatrix(ctx, CGAffineTransformIdentity);
     
@@ -105,10 +109,15 @@
                             options:NSAttributedStringEnumerationLongestEffectiveRangeNotRequired
                          usingBlock:^(NSColor* color, NSRange range, BOOL *stop) {
                              if (color) {
-                                 for (NSUInteger i = range.location; i < NSMaxRange(range); i++) {
-                                     NSRect bgRect = [self rectForCharacterIndex:i];
-                                     [color setFill];
-                                     [NSBezierPath fillRect:bgRect];
+                                 [color setFill];
+                                 if (NSEqualRanges(range, NSMakeRange(0, [self.buffer length]))) {
+                                     [NSBezierPath fillRect:[self bounds]];
+                                 }
+                                 else {
+                                     for (NSUInteger i = range.location; i < NSMaxRange(range); i++) {
+                                         NSRect bgRect = [self rectForCharacterIndex:i];
+                                         [NSBezierPath fillRect:bgRect];
+                                     }
                                  }
                              }
                          }];
@@ -146,9 +155,11 @@
     if (fg) [self.buffer addAttribute:NSForegroundColorAttributeName value:fg range:r];
     if (bg) [self.buffer addAttribute:NSBackgroundColorAttributeName value:bg range:r];
     
-    for (NSUInteger j = i; j < i + [str length]; j++) {
-        NSRect r = [self rectForCharacterIndex:j];
-        [self setNeedsDisplayInRect:r];
+    if (!self.postponeRedraws) {
+        for (NSUInteger j = i; j < i + [str length]; j++) {
+            NSRect r = [self rectForCharacterIndex:j];
+            [self setNeedsDisplayInRect:r];
+        }
     }
 }
 
@@ -157,6 +168,15 @@
     NSRange r = NSMakeRange(0, [self.buffer length]);
     [self.buffer replaceCharactersInRange:r withString:padding];
     [self.buffer addAttribute:NSBackgroundColorAttributeName value:bg range:r];
+    
+    if (!self.postponeRedraws)
+        [self setNeedsDisplay:YES];
+}
+
+- (void) postponeRedraws:(dispatch_block_t)blk {
+    self.postponeRedraws = YES;
+    blk();
+    self.postponeRedraws = NO;
     [self setNeedsDisplay:YES];
 }
 
