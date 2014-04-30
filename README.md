@@ -2,6 +2,8 @@
 
 ![sshot.png](sshot.png)
 
+Source to that screenshot: [init.lua](https://github.com/sdegutis/chaos/blob/2dcaf408287553f7ec24ca0d859ac6492d71ef6d/Chaos/init.lua)
+
 #### What is it?
 
 Chaos.app is basically just a grid of characters, with a Lua API.
@@ -26,8 +28,6 @@ given char, fg color, and bg color. That's all.
 
 #### Example
 
-Here's a quine:
-
-[init.lua](https://github.com/sdegutis/chaos/blob/87f9177f4ee030ab931199b8a4b5f983017d0283/Chaos/init.lua)
+Here's a quine: [init.lua](https://github.com/sdegutis/chaos/blob/87f9177f4ee030ab931199b8a4b5f983017d0283/Chaos/init.lua)
 
 ![quine.png](quine.png)
