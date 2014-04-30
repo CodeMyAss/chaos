@@ -26,6 +26,16 @@ modifier info) and "window resized" event. You can clear the whole
 screen with a given background color, and set a given grid cell to a
 given char, fg color, and bg color. That's all.
 
+#### But why Lua?
+
+1. It's so small of a language that I can literally just throw it
+   entire source code right into this project.
+2. It's super fast. Like, way fast. For serious.
+3. It's a really simple language. And simplicity is my favorite thing
+   ever lately.
+4. It's not that bad, really. Sure, there are a few weird things, but
+   they're minor.
+
 #### Example
 
 Here's a quine: [init.lua](https://github.com/sdegutis/chaos/blob/87f9177f4ee030ab931199b8a4b5f983017d0283/Chaos/init.lua)
