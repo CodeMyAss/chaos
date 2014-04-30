@@ -1,8 +1,8 @@
 ### Chaos
 
-![sshot.png](sshot.png)
+Source to this screenshot: [init.lua](https://github.com/sdegutis/chaos/blob/2dcaf408287553f7ec24ca0d859ac6492d71ef6d/Chaos/init.lua)
 
-Source to that screenshot: [init.lua](https://github.com/sdegutis/chaos/blob/2dcaf408287553f7ec24ca0d859ac6492d71ef6d/Chaos/init.lua)
+![sshot.png](sshot.png)
 
 #### What is it?
 
