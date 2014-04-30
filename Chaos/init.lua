@@ -36,28 +36,13 @@ local function redraw()
 
     window:clear(bg)
 
-    window:setw("┌", 0, 0, fg, bg)
-    window:setw("┐", w-1, 0, fg, bg)
-    window:setw("└", 0, h-1, fg, bg)
-    window:setw("┘", w-1, h-1, fg, bg)
-
-    for x = 1, w-2 do
-        window:setw("─", x, 0, fg, bg)
-        window:setw("─", x, h-1, fg, bg)
-    end
-
-    for y = 1, h-2 do
-        window:setw("│", 0, y, fg, bg)
-        window:setw("│", w-1, y, fg, bg)
-    end
-
-    for y = 1, h-2 do
-       local line = Utf8to32(file[y])
+    for y = 0, h-1 do
+       local line = Utf8to32(file[y+1])
        if line then
           for x = 1, #line do
-             if x == w - 1 then break end
+             if x-1 == w then break end
              local c = line[x]
-             if c ~= 13 and c ~= 0 then window:set(c, x, y, fg, bg) end
+             if c ~= 13 and c ~= 0 then window:set(c, x-1, y, fg, bg) end
           end
        end
     end
