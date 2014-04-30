@@ -140,4 +140,12 @@
     [self setNeedsDisplay:YES];
 }
 
+- (void) clear:(NSColor*)bg {
+    NSString* padding = [@"" stringByPaddingToLength:[self.buffer length] withString:@" " startingAtIndex:0];
+    NSRange r = NSMakeRange(0, [self.buffer length]);
+    [self.buffer replaceCharactersInRange:r withString:padding];
+    [self.buffer addAttribute:NSBackgroundColorAttributeName value:bg range:r];
+    [self setNeedsDisplay:YES];
+}
+
 @end

@@ -27,6 +27,8 @@ local function redraw()
     local fg = "000000"
     local bg = "ffffff"
 
+    window:clear(bg)
+
     window:setw("┌", 0, 0, fg, bg)
     window:setw("┐", w-1, 0, fg, bg)
     window:setw("└", 0, h-1, fg, bg)
@@ -40,12 +42,6 @@ local function redraw()
     for y = 1, h-2 do
         window:setw("│", 0, y, fg, bg)
         window:setw("│", w-1, y, fg, bg)
-    end
-
-    for y = 1, h-2 do
-        for x = 1, w-2 do
-            window:setw(" ", x, y, fg, bg)
-        end
     end
 
     local f = io.lines("Chaos.app/Contents/Resources/init.lua")

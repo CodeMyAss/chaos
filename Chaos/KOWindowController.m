@@ -88,4 +88,8 @@
     self.ignoreResizesForASecond = NO;
 }
 
+- (void) clear:(NSColor*)bg {
+    [self.tv clear:bg];
+}
+
 @end

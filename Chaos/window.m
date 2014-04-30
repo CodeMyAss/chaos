@@ -88,6 +88,16 @@ static int win_setw(lua_State *L) {
     return 0;
 }
 
+// args: [win, bg]
+static int win_clear(lua_State *L) {
+    KOWindowController* wc = (__bridge KOWindowController*)*(void**)lua_touserdata(L, 1);
+    
+    NSColor* bg = SDColorFromHex(lua_tostring(L, 2));
+    [wc clear:bg];
+    
+    return 0;
+}
+
 static const luaL_Reg winlib[] = {
     // event handlers
     {"resized", win_resized},
@@ -97,6 +107,7 @@ static const luaL_Reg winlib[] = {
     {"getsize", win_getsize},
     {"set", win_set},
     {"setw", win_setw},
+    {"clear", win_clear},
     {NULL, NULL}
 };
 
