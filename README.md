@@ -28,7 +28,7 @@ given char, fg color, and bg color. That's all.
 
 Anyway, this is meant to be a lower-level API that you write a useful
 thing on top of. It was basically born out of my frustration with the
-ncurses API and the lack of using any color I want in the terminal.
+ncurses API and the inability to use any color I want in the terminal.
 
 #### But why Lua?
 
