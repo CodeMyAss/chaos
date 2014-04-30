@@ -6,10 +6,10 @@ Source to this screenshot: [init.lua](https://github.com/sdegutis/chaos/blob/2dc
 
 #### What is it?
 
-Chaos.app is basically just a grid of characters, with a Lua API.
+Chaos.app is just a grid of characters, with a Lua API.
 
-Why, you ask? Well, I wanted to write a text editor. Like, a
-super-flexible one. One that anyone can modify /entirely/ without
+Why, you ask? Well, I wanted to write a text editor. I mean, a
+super-flexible one. One that anyone can modify *entirely* without
 having to recompile anything.
 
 But for the sake of fighting Wirth's law, I figured I'd do a throwback
@@ -25,6 +25,10 @@ Lua callbacks for the "key pressed" event (which has full key and
 modifier info) and "window resized" event. You can clear the whole
 screen with a given background color, and set a given grid cell to a
 given char, fg color, and bg color. That's all.
+
+Anyway, this is meant to be a lower-level API that you write a useful
+thing on top of. It was basically born out of my frustration with the
+ncurses API and the lack of using any color I want in the terminal.
 
 #### But why Lua?
 
