@@ -28,7 +28,7 @@ given char, fg color, and bg color. That's all.
 
 #### But why Lua?
 
-1. It's so small of a language that I can literally just throw it
+1. It's so small of a language that I can literally just throw its
    entire source code right into this project.
 2. It's super fast. Like, way fast. For serious.
 3. It's a really simple language. And simplicity is my favorite thing
