@@ -21,6 +21,13 @@ function Utf8to32(utf8str)
    return res
 end
 
+local file = {}
+do
+    for line in io.lines("Chaos.app/Contents/Resources/init.lua") do
+        table.insert(file, line)
+    end
+end
+
 local function redraw()
     local w, h = window:getsize()
 
@@ -44,10 +51,8 @@ local function redraw()
         window:setw("│", w-1, y, fg, bg)
     end
 
-    local f = io.lines("Chaos.app/Contents/Resources/init.lua")
-
     for y = 1, h-2 do
-       local line = Utf8to32(f())
+       local line = Utf8to32(file[y])
        if line then
           for x = 1, #line do
              if x == w - 1 then break end
