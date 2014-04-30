@@ -69,6 +69,21 @@
                       self.charHeight * self.rows);
 }
 
+- (NSRect) rectForCharacterIndex:(NSUInteger)i {
+    NSRect bounds = [self bounds];
+    bounds.size = [self realViewSize]; // awww, duplicated code :/
+    
+    NSRect r;
+    r.origin.x = (i % self.cols) * self.charWidth;
+    r.origin.y = NSMaxY(bounds) - (((i / self.cols) + 1) * self.charHeight);
+    r.size.width = self.charWidth;
+    r.size.height = self.charHeight;
+    
+    r = NSIntegralRect(r);
+    
+    return r;
+}
+
 - (void) drawRect:(NSRect)dirtyRect {
     CGContextRef ctx = [[NSGraphicsContext currentContext] graphicsPort];
     CGContextSetTextMatrix(ctx, CGAffineTransformIdentity);
@@ -91,14 +106,7 @@
                          usingBlock:^(NSColor* color, NSRange range, BOOL *stop) {
                              if (color) {
                                  for (NSUInteger i = range.location; i < NSMaxRange(range); i++) {
-                                     NSRect bgRect;
-                                     bgRect.origin.x = (i % self.cols) * self.charWidth;
-                                     bgRect.origin.y = NSMaxY(bounds) - (((i / self.cols) + 1) * self.charHeight);
-                                     bgRect.size.width = self.charWidth;
-                                     bgRect.size.height = self.charHeight;
-                                     
-                                     bgRect = NSIntegralRect(bgRect);
-                                     
+                                     NSRect bgRect = [self rectForCharacterIndex:i];
                                      [color setFill];
                                      [NSBezierPath fillRect:bgRect];
                                  }
@@ -137,7 +145,11 @@
     [self.buffer replaceCharactersInRange:r withString:str];
     if (fg) [self.buffer addAttribute:NSForegroundColorAttributeName value:fg range:r];
     if (bg) [self.buffer addAttribute:NSBackgroundColorAttributeName value:bg range:r];
-    [self setNeedsDisplay:YES];
+    
+    for (NSUInteger j = i; j < i + [str length]; j++) {
+        NSRect r = [self rectForCharacterIndex:j];
+        [self setNeedsDisplayInRect:r];
+    }
 }
 
 - (void) clear:(NSColor*)bg {
