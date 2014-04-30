@@ -1,0 +1,4 @@
+you do so much hoop jumping to just load a file from core_dir, why not just open the file yourself, and lua_load() it?
+you're calling luaopen_window() directly? wth
+typically, you'll find most binding libs have a constructor/factory function that return a userdata with a metatable attached to the userdata for calling methods/member functions
+also see luaL_newmetatable and luaL_getmetatable (i do luaL_newmetatable in my luaopen_ functions if it hasn't already been registered, then the constructor functions attach that metatable to the appropriate userdata via luaL_getmetatable)
