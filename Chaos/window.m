@@ -77,8 +77,8 @@ static int win_set(lua_State *L) {
     KOWindowController* wc = (__bridge KOWindowController*)*(void**)lua_touserdata(L, 1);
     
     NSString* c = [NSString stringWithFormat:@"%C", (unsigned short)lua_tonumber(L, 2)];
-    int x = lua_tonumber(L, 3);
-    int y = lua_tonumber(L, 4);
+    int x = lua_tonumber(L, 3) - 1;
+    int y = lua_tonumber(L, 4) - 1;
     NSColor* fg = SDColorFromHex(lua_tostring(L, 5));
     NSColor* bg = SDColorFromHex(lua_tostring(L, 6));
     
@@ -92,8 +92,8 @@ static int win_setw(lua_State *L) {
     KOWindowController* wc = (__bridge KOWindowController*)*(void**)lua_touserdata(L, 1);
     
     NSString* c = [NSString stringWithUTF8String: lua_tostring(L, 2)];
-    int x = lua_tonumber(L, 3);
-    int y = lua_tonumber(L, 4);
+    int x = lua_tonumber(L, 3) - 1;
+    int y = lua_tonumber(L, 4) - 1;
     NSColor* fg = SDColorFromHex(lua_tostring(L, 5));
     NSColor* bg = SDColorFromHex(lua_tostring(L, 6));
     

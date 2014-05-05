@@ -31,18 +31,18 @@ end
 local function redraw()
     local w, h = window:getsize()
 
-    local fg = "000000"
-    local bg = "ffffff"
+    local fg = "00FF00"
+    local bg = "222222"
 
     window:clear(bg)
 
-    for y = 0, h-1 do
-       local line = Utf8to32(file[y+1])
+    for y = 1, h do
+       local line = Utf8to32(file[y])
        if line then
           for x = 1, #line do
              if x-1 == w then break end
              local c = line[x]
-             if c ~= 13 and c ~= 0 then window:set(c, x-1, y, fg, bg) end
+             if c ~= 13 and c ~= 0 then window:set(c, x, y, fg, bg) end
           end
        end
     end
@@ -65,8 +65,8 @@ window:keydown(function(t)
 
     window:setw(t.key, x, y, fg, bg)
     x = x + 1
-    if x == w - 1 then
-        x = 1;
+    if x == w+1 then
+        x = 1
         y = y + 1
     end
 end)
