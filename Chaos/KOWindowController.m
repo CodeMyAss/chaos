@@ -95,6 +95,7 @@
 }
 
 - (void) clear:(NSColor*)bg {
+    [[self window] setBackgroundColor:bg];
     [self.tv clear:bg];
 }
 
