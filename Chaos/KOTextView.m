@@ -108,7 +108,7 @@
                             inRange:NSMakeRange(0, [self.buffer length])
                             options:NSAttributedStringEnumerationLongestEffectiveRangeNotRequired
                          usingBlock:^(NSColor* color, NSRange range, BOOL *stop) {
-                             if (color) {
+                             if (color && ![color isEqual:[[self window] backgroundColor]]) {
                                  [color setFill];
                                  if (NSEqualRanges(range, NSMakeRange(0, [self.buffer length]))) {
                                      [NSBezierPath fillRect:[self bounds]];
