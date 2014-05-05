@@ -2,6 +2,15 @@
 #import <QuartzCore/QuartzCore.h>
 
 
+@interface KOCell : NSObject
+@property NSString* str;
+@property NSColor* fg;
+@property NSColor* bg;
+@end
+@implementation KOCell
+@end
+
+
 @interface KOTextView ()
 
 @property (readwrite) CGFloat charWidth;
@@ -10,24 +19,27 @@
 @property (readwrite) int rows;
 @property (readwrite) int cols;
 
+@property NSMutableArray* grid;
 @property NSMutableAttributedString* buffer;
-@property NSMutableDictionary* defaultAttrs;
-
-@property BOOL postponeRedraws;
 
 @end
+
+#define SDRectFor(x, y) NSMakeRect(x * self.charWidth, [self bounds].size.height - ((y + 1) * self.charHeight), self.charWidth, self.charHeight)
 
 @implementation KOTextView
 
 - (id) initWithFrame:(NSRect)frameRect {
     if (self = [super initWithFrame:frameRect]) {
-        self.buffer = [[NSMutableAttributedString alloc] init];
-        self.defaultAttrs = [NSMutableDictionary dictionary];
+        self.grid = [NSMutableArray array];
+        
+        NSMutableDictionary* defaultAttrs = [NSMutableDictionary dictionary];
         
         NSMutableParagraphStyle* pstyle = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
         [pstyle setLineBreakMode:NSLineBreakByCharWrapping];
         
-        self.defaultAttrs[NSParagraphStyleAttributeName] = pstyle;
+        defaultAttrs[NSParagraphStyleAttributeName] = pstyle;
+        
+        self.buffer = [[NSMutableAttributedString alloc] initWithString:@" " attributes:defaultAttrs];
     }
     return self;
 }
@@ -54,130 +66,124 @@
 }
 
 - (void) useFont:(NSFont*)font {
-    self.defaultAttrs[NSFontAttributeName] = font;
+    [self.buffer addAttribute:NSFontAttributeName value:font range:NSMakeRange(0, 1)];
     
-    NSAttributedString* as = [[NSAttributedString alloc] initWithString:@"x" attributes:self.defaultAttrs];
-    CTFramesetterRef frameSetter = CTFramesetterCreateWithAttributedString((__bridge CFAttributedStringRef)as);
-    CGSize suggestedSize = CTFramesetterSuggestFrameSizeWithConstraints(frameSetter, CFRangeMake(0, 1), NULL, CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX), NULL);
-    CFRelease(frameSetter);
-    
-    self.charWidth = suggestedSize.width;
-    self.charHeight = suggestedSize.height;
+    NSRect r = [self.buffer boundingRectWithSize:NSMakeSize(200, 200) options:0];
+    self.charWidth = r.size.width;
+    self.charHeight = r.size.height;
 }
 
 - (NSSize) realViewSize {
-    return NSMakeSize(self.charWidth * self.cols,
-                      self.charHeight * self.rows);
-}
-
-- (NSRect) rectForCharacterIndex:(NSUInteger)i {
-    NSRect bounds = [self bounds];
-    bounds.size = [self realViewSize]; // awww, duplicated code :/
-    
-    NSRect r;
-    r.origin.x = (i % self.cols) * self.charWidth;
-    r.origin.y = NSMaxY(bounds) - (((i / self.cols) + 1) * self.charHeight);
-    r.size.width = self.charWidth;
-    r.size.height = self.charHeight;
-    
-    r = NSIntegralRect(r);
-    
-    return r;
+    return NSMakeSize(self.charWidth * self.cols, self.charHeight * self.rows);
 }
 
 - (void) drawRect:(NSRect)dirtyRect {
-    if (self.postponeRedraws)
-        return;
+    const NSRect* redrawRects;
+    NSInteger redrawCount;
+    [self getRectsBeingDrawn:&redrawRects count:&redrawCount];
     
     CGContextRef ctx = [[NSGraphicsContext currentContext] graphicsPort];
     CGContextSetTextMatrix(ctx, CGAffineTransformIdentity);
     
-    NSRect bounds = [self bounds];
-    bounds.size = [self realViewSize];
-    
-    CTFramesetterRef framesetter = CTFramesetterCreateWithAttributedString((__bridge CFAttributedStringRef)self.buffer);
-    
-    CGMutablePathRef path = CGPathCreateMutable();
-    CGPathAddRect(path, NULL, bounds);
-    
-    CTFrameRef textFrame = CTFramesetterCreateFrame(framesetter, CFRangeMake(0,0), path, NULL);
-    
-    // we have to manually draw backgrounds :/
-    
-    [self.buffer enumerateAttribute:NSBackgroundColorAttributeName
-                            inRange:NSMakeRange(0, [self.buffer length])
-                            options:NSAttributedStringEnumerationLongestEffectiveRangeNotRequired
-                         usingBlock:^(NSColor* color, NSRange range, BOOL *stop) {
-                             if (color) {
-                                 [color setFill];
-                                 if (NSEqualRanges(range, NSMakeRange(0, [self.buffer length]))) {
-                                     [NSBezierPath fillRect:[self bounds]];
-                                 }
-                                 else {
-                                     for (NSUInteger i = range.location; i < NSMaxRange(range); i++) {
-                                         NSRect bgRect = [self rectForCharacterIndex:i];
-                                         [NSBezierPath fillRect:bgRect];
-                                     }
-                                 }
-                             }
-                         }];
-    
-    // okay, now draw the actual text (just one line! ha!)
-    
-    CTFrameDraw(textFrame, ctx);
-    
-    CFRelease(framesetter);
-    CFRelease(textFrame);
-    CGPathRelease(path);
-}
-
-- (void) useGridSize:(NSSize)size {
-    self.cols = size.width;
-    self.rows = size.height;
-    
-    // whenever we resize the grid, (if change > 0) just pad to length with " " and re-font the newly added text
-    
-    NSUInteger newBufferLen = self.cols * self.rows;
-    NSUInteger oldLen = [self.buffer length];
-    NSInteger diff = newBufferLen - oldLen;
-    
-    if (diff > 0) {
-        NSString* padding = [@"" stringByPaddingToLength:diff withString:@" " startingAtIndex:0];
-        [[self.buffer mutableString] appendString:padding];
-        [self.buffer setAttributes:self.defaultAttrs range:NSMakeRange(oldLen, diff)];
-    }
-}
-
-- (void) setStr:(NSString*)str x:(int)x y:(int)y fg:(NSColor*)fg bg:(NSColor*)bg {
-    NSUInteger i = x + y * self.cols;
-    NSRange r = NSMakeRange(i, [str length]);
-    [self.buffer replaceCharactersInRange:r withString:str];
-    if (fg) [self.buffer addAttribute:NSForegroundColorAttributeName value:fg range:r];
-    if (bg) [self.buffer addAttribute:NSBackgroundColorAttributeName value:bg range:r];
-    
-    if (!self.postponeRedraws) {
-        for (NSUInteger j = i; j < i + [str length]; j++) {
-            NSRect r = [self rectForCharacterIndex:j];
-            [self setNeedsDisplayInRect:r];
+    for (int y = 0; y < self.rows; y++) {
+        for (int x = 0; x < self.cols; x++) {
+            for (int r = 0; r < redrawCount; r++) {
+                NSRect charRect = SDRectFor(x, y);
+                
+                if (NSIntersectsRect(charRect, redrawRects[r])) {
+                    NSArray* row = [self.grid objectAtIndex:y];
+                    KOCell* cell = [row objectAtIndex:x];
+                    NSRange range = NSMakeRange(0, 1);
+                    
+                    [self.buffer replaceCharactersInRange: range withString: cell.str];
+                    [self.buffer addAttribute:NSForegroundColorAttributeName value:cell.fg range:range];
+                    [self.buffer addAttribute:NSBackgroundColorAttributeName value:cell.bg range:range];
+                    
+                    CGContextSetFillColorWithColor(ctx, [cell.bg CGColor]);
+                    CGContextFillRect(ctx, charRect);
+                    
+                    CTLineRef line = CTLineCreateWithAttributedString((CFAttributedStringRef)self.buffer);
+                    CGContextSetTextPosition(ctx, charRect.origin.x, charRect.origin.y);
+                    CTLineDraw(line, ctx);
+                    CFRelease(line);
+                }
+            }
         }
     }
 }
 
-- (void) clear:(NSColor*)bg {
-    NSString* padding = [@"" stringByPaddingToLength:[self.buffer length] withString:@" " startingAtIndex:0];
-    NSRange r = NSMakeRange(0, [self.buffer length]);
-    [self.buffer replaceCharactersInRange:r withString:padding];
-    [self.buffer addAttribute:NSBackgroundColorAttributeName value:bg range:r];
+- (void) useGridSize:(NSSize)size {
+    int numMoreCols = size.width  - self.cols;
+    int numMoreRows = size.height - self.rows;
     
-    if (!self.postponeRedraws)
-        [self setNeedsDisplay:YES];
+    self.cols = size.width;
+    self.rows = size.height;
+    
+    if (numMoreCols > 0) {
+        for (NSMutableArray* row in self.grid) {
+            for (int i = 0; i < numMoreCols; i++) {
+                KOCell* c = [[KOCell alloc] init];
+                c.fg = [NSColor blackColor];
+                c.bg = [NSColor whiteColor];
+                c.str = @" ";
+                [row addObject:c];
+            }
+        }
+    }
+    
+    if (numMoreRows > 0) {
+        for (int i = 0; i < numMoreRows; i++) {
+            NSMutableArray* row = [NSMutableArray array];
+            for (int x = 0; x < self.cols; x++) {
+                KOCell* c = [[KOCell alloc] init];
+                c.fg = [NSColor blackColor];
+                c.bg = [NSColor whiteColor];
+                c.str = @" ";
+                [row addObject:c];
+            }
+            [self.grid addObject:row];
+        }
+    }
 }
 
-- (void) postponeRedraws:(dispatch_block_t)blk {
-    self.postponeRedraws = YES;
-    blk();
-    self.postponeRedraws = NO;
+- (BOOL) preservesContentDuringLiveResize { return YES; }
+
+- (void) setStr:(NSString*)str x:(int)x y:(int)y fg:(NSColor*)fg bg:(NSColor*)bg {
+    NSArray* row = [self.grid objectAtIndex:y];
+    KOCell* cell = [row objectAtIndex:x];
+    
+    cell.str = str;
+    if (fg) cell.fg = fg;
+    if (bg) cell.bg = bg;
+    
+    [self setNeedsDisplayInRect: SDRectFor(x, y)];
+}
+
+- (void) clear:(NSColor*)bg {
+    for (NSArray* row in self.grid) {
+        for (KOCell* cell in row) {
+            cell.str = @" ";
+            cell.bg = bg;
+        }
+    }
+    
     [self setNeedsDisplay:YES];
+}
+
+- (void) setFrameSize:(NSSize)newSize {
+    [super setFrameSize:newSize];
+    
+    if ([self inLiveResize]) {
+        NSRect rects[4];
+        NSInteger count;
+        [self getRectsExposedDuringLiveResize:rects count:&count];
+        while (count --> 0) {
+            [self setNeedsDisplayInRect:rects[count]];
+        }
+    }
+    else {
+        [self setNeedsDisplay:YES];
+    }
 }
 
 @end

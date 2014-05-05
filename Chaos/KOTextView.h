@@ -21,6 +21,4 @@ typedef void(^KOKeyDownHandler)(BOOL ctrl, BOOL alt, BOOL cmd, NSString* str);
 
 - (void) clear:(NSColor*)bg;
 
-- (void) postponeRedraws:(dispatch_block_t)blk;
-
 @end

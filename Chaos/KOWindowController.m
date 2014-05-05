@@ -37,15 +37,16 @@
     NSSize newViewSize = [[[self window] contentView] frame].size;
     
     // i have NO idea what this equation does or why it works. but IT WORKS. granted im afraid to touch it ever again.
-    CGFloat newGridWidth  = floor((newViewSize.width -  self.padding.width  * 2) / self.tv.charWidth);
-    CGFloat newGridHeight = floor((newViewSize.height - self.padding.height * 2) / self.tv.charHeight);
+    CGFloat newCols  = floor((newViewSize.width -  self.padding.width  * 2) / self.tv.charWidth);
+    CGFloat newRows = floor((newViewSize.height - self.padding.height * 2) / self.tv.charHeight);
     
-    [self useGridSize:NSMakeSize(newGridWidth, newGridHeight)];
+    int oldCols = self.tv.cols;
+    int oldRows = self.tv.rows;
     
-    [self.tv postponeRedraws:^{
-        if (self.windowResizedHandler)
-            self.windowResizedHandler();
-    }];
+    [self useGridSize:NSMakeSize(newCols, newRows)];
+    
+    if (self.windowResizedHandler && (oldCols != self.tv.cols || oldRows != self.tv.rows))
+        self.windowResizedHandler();
 }
 
 - (void) useFont:(NSFont*)font {
@@ -85,7 +86,11 @@
     NSEnableScreenUpdates();
     
     // center text view in padding
-    [self.tv setFrameOrigin:NSMakePoint(self.padding.width, self.padding.height)];
+    NSRect newTextViewFrame;
+    newTextViewFrame.origin.x = self.padding.width;
+    newTextViewFrame.origin.y = self.padding.height;
+    newTextViewFrame.size = [self.tv realViewSize];
+    [self.tv setFrame: newTextViewFrame];
     
     self.ignoreResizesForASecond = NO;
 }
