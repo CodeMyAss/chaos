@@ -85,7 +85,11 @@
     NSEnableScreenUpdates();
     
     // center text view in padding
-    [self.tv setFrameOrigin:NSMakePoint(self.padding.width, self.padding.height)];
+    NSRect tvFrame;
+    tvFrame.size.width  = self.tv.cols * self.tv.charWidth;
+    tvFrame.size.height = self.tv.rows * self.tv.charHeight;
+    tvFrame.origin = NSMakePoint(self.padding.width, self.padding.height);
+    [self.tv setFrame: tvFrame];
     
     self.ignoreResizesForASecond = NO;
 }
