@@ -59,12 +59,12 @@ end)
 
 window:keydown(function(t)
     local w, h = window:getsize()
+    local name, size = window:getfont()
 
-    if t.key == "x" then
-        window:resize(w+1, h+1)
-    elseif t.key == "f" then
-        local name, size = window:getfont()
-        window:usefont(name, size+1)
+    if     t.key == "-" then window:usefont(name, size-1)
+    elseif t.key == "=" then window:usefont(name, size+1)
+    elseif t.key == "_" then window:resize(w-1, h-1)
+    elseif t.key == "+" then window:resize(w+1, h+1)
     else
         local fg = "ffff00"
         local bg = "0000ff"
