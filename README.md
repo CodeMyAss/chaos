@@ -45,3 +45,9 @@ ncurses API and the inability to use any color I want in the terminal.
 Here's a quine: [init.lua](https://github.com/sdegutis/chaos/blob/87f9177f4ee030ab931199b8a4b5f983017d0283/Chaos/init.lua)
 
 ![quine.png](quine.png)
+
+#### TODO
+
+- add copy/paste to API
+- add convenient way to print whole string (write it in lua)
+- add mouse functionality to API
