@@ -149,6 +149,16 @@ static int win_getfont(lua_State *L) {
     return 2;
 }
 
+// args: [win, title]
+static int win_settitle(lua_State *L) {
+    KOWindowController* wc = (__bridge KOWindowController*)*(void**)lua_touserdata(L, 1);
+    
+    NSString* title = [NSString stringWithUTF8String: lua_tostring(L, 2)];
+    [[wc window] setTitle:title];
+    
+    return 0;
+}
+
 static const luaL_Reg winlib[] = {
     // event handlers
     {"resized", win_resized},
@@ -164,6 +174,9 @@ static const luaL_Reg winlib[] = {
     
     {"usefont", win_usefont},
     {"getfont", win_getfont},
+    
+    {"settitle", win_settitle},
+    
     {NULL, NULL}
 };
 

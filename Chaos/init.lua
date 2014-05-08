@@ -1,4 +1,4 @@
-local asdf = "┌"
+window:settitle("Hello from Chaos.app!")
 
 function Utf8to32(utf8str)
    assert(type(utf8str) == "string")
