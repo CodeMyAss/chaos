@@ -53,8 +53,13 @@
         self.keyDownHandler(ctrl, alt, cmd, str);
 }
 
+- (NSFont*) font {
+    return [self.defaultAttrs objectForKey:NSFontAttributeName];
+}
+
 - (void) useFont:(NSFont*)font {
     self.defaultAttrs[NSFontAttributeName] = font;
+    [self.buffer addAttribute:NSFontAttributeName value:font range:NSMakeRange(0, [self.buffer length])];
     
     NSAttributedString* as = [[NSAttributedString alloc] initWithString:@"x" attributes:self.defaultAttrs];
     CTFramesetterRef frameSetter = CTFramesetterCreateWithAttributedString((__bridge CFAttributedStringRef)as);

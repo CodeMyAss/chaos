@@ -15,6 +15,8 @@ typedef void(^KOKeyDownHandler)(BOOL ctrl, BOOL alt, BOOL cmd, NSString* str);
 - (void) useFont:(NSFont*)font;
 - (void) useGridSize:(NSSize)size;
 
+- (NSFont*) font;
+
 - (NSSize) realViewSize;
 
 - (void) setStr:(NSString*)str x:(int)x y:(int)y fg:(NSColor*)fg bg:(NSColor*)bg;

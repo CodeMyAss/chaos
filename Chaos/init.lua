@@ -60,14 +60,21 @@ end)
 window:keydown(function(t)
     local w, h = window:getsize()
 
-    local fg = "ffff00"
-    local bg = "0000ff"
+    if t.key == "x" then
+        window:resize(w+1, h+1)
+    elseif t.key == "f" then
+        local name, size = window:getfont()
+        window:usefont(name, size+1)
+    else
+        local fg = "ffff00"
+        local bg = "0000ff"
 
-    window:setw(t.key, x, y, fg, bg)
-    x = x + 1
-    if x == w+1 then
-        x = 1
-        y = y + 1
+        window:setw(t.key, x, y, fg, bg)
+        x = x + 1
+        if x == w+1 then
+            x = 1
+            y = y + 1
+        end
     end
 end)
 

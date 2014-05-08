@@ -112,6 +112,43 @@ static int win_clear(lua_State *L) {
     return 0;
 }
 
+// args: [win, w, h]
+static int win_resize(lua_State *L) {
+    KOWindowController* wc = (__bridge KOWindowController*)*(void**)lua_touserdata(L, 1);
+    
+    int w = lua_tonumber(L, 2);
+    int h = lua_tonumber(L, 3);
+    [wc useGridSize:NSMakeSize(w, h)];
+    
+    return 0;
+}
+
+// args: [win, name, size]
+static int win_usefont(lua_State *L) {
+    KOWindowController* wc = (__bridge KOWindowController*)*(void**)lua_touserdata(L, 1);
+    
+    NSString* name = [NSString stringWithUTF8String: lua_tostring(L, 2)];
+    double size = lua_tonumber(L, 3);
+    
+    NSFont* font = [NSFont fontWithName:name size:size];
+    [wc useFont:font];
+    
+    return 0;
+}
+
+// args: [win]
+// returns: [name, size]
+static int win_getfont(lua_State *L) {
+    KOWindowController* wc = (__bridge KOWindowController*)*(void**)lua_touserdata(L, 1);
+    
+    NSFont* font = [wc font];
+    
+    lua_pushstring(L, [[font fontName] UTF8String]);
+    lua_pushnumber(L, [font pointSize]);
+    
+    return 2;
+}
+
 static const luaL_Reg winlib[] = {
     // event handlers
     {"resized", win_resized},
@@ -119,9 +156,14 @@ static const luaL_Reg winlib[] = {
     
     // methods
     {"getsize", win_getsize},
+    {"resize", win_resize},
+    
+    {"clear", win_clear},
     {"set", win_set},
     {"setw", win_setw},
-    {"clear", win_clear},
+    
+    {"usefont", win_usefont},
+    {"getfont", win_getfont},
     {NULL, NULL}
 };
 

@@ -3,7 +3,9 @@
 
 @interface KOWindowController : NSWindowController <NSWindowDelegate>
 
+- (void) useFont:(NSFont*)font;
 - (void) useGridSize:(NSSize)size;
+- (NSFont*) font;
 
 - (int) cols;
 - (int) rows;

@@ -41,17 +41,16 @@
     CGFloat newGridHeight = floor((newViewSize.height - self.padding.height * 2) / self.tv.charHeight);
     
     [self useGridSize:NSMakeSize(newGridWidth, newGridHeight)];
-    
-    [self.tv postponeRedraws:^{
-        if (self.windowResizedHandler)
-            self.windowResizedHandler();
-    }];
 }
 
 - (void) useFont:(NSFont*)font {
     [self.tv useFont:font];
     [[self window] setContentResizeIncrements:NSMakeSize(floor(self.tv.charWidth), floor(self.tv.charHeight))];
     [self useGridSize:NSMakeSize(self.tv.cols, self.tv.rows)];
+}
+
+- (NSFont*) font {
+    return [self.tv font];
 }
 
 - (int) cols {
@@ -67,31 +66,36 @@
 }
 
 - (void) useGridSize:(NSSize)size {
-    self.ignoreResizesForASecond = YES;
-    
-    [self.tv useGridSize:size];
-    
-    // pad content view size
-    NSSize newContentViewSize = [self.tv realViewSize];
-    newContentViewSize.width += self.padding.width * 2;
-    newContentViewSize.height += self.padding.height * 2;
-    
-    // resize, keeping top-left the same
-    NSDisableScreenUpdates();
-    NSRect frame = [[self window] frame];
-    NSPoint p = NSMakePoint(NSMinX(frame), NSMaxY(frame));
-    [[self window] setContentSize:newContentViewSize];
-    [[self window] setFrameTopLeftPoint:p];
-    NSEnableScreenUpdates();
-    
-    // center text view in padding
-    NSRect tvFrame;
-    tvFrame.size.width  = self.tv.cols * self.tv.charWidth;
-    tvFrame.size.height = self.tv.rows * self.tv.charHeight;
-    tvFrame.origin = NSMakePoint(self.padding.width, self.padding.height);
-    [self.tv setFrame: tvFrame];
-    
-    self.ignoreResizesForASecond = NO;
+    [self.tv postponeRedraws:^{
+        self.ignoreResizesForASecond = YES;
+        
+        [self.tv useGridSize:size];
+        
+        // pad content view size
+        NSSize newContentViewSize = [self.tv realViewSize];
+        newContentViewSize.width += self.padding.width * 2;
+        newContentViewSize.height += self.padding.height * 2;
+        
+        // resize, keeping top-left the same
+        NSDisableScreenUpdates();
+        NSRect frame = [[self window] frame];
+        NSPoint p = NSMakePoint(NSMinX(frame), NSMaxY(frame));
+        [[self window] setContentSize:newContentViewSize];
+        [[self window] setFrameTopLeftPoint:p];
+        NSEnableScreenUpdates();
+        
+        // center text view in padding
+        NSRect tvFrame;
+        tvFrame.size.width  = self.tv.cols * self.tv.charWidth;
+        tvFrame.size.height = self.tv.rows * self.tv.charHeight;
+        tvFrame.origin = NSMakePoint(self.padding.width, self.padding.height);
+        [self.tv setFrame: tvFrame];
+        
+        self.ignoreResizesForASecond = NO;
+        
+        if (self.windowResizedHandler)
+            self.windowResizedHandler();
+    }];
 }
 
 - (void) clear:(NSColor*)bg {
