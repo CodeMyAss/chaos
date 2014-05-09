@@ -27,7 +27,7 @@ static NSColor* SDColorFromHex(const char* hex) {
 
 // args: [win, fn]
 static int win_resized(lua_State *L) {
-    KOWindowController* wc = (__bridge KOWindowController*)*(void**)lua_touserdata(L, 1);
+    KOWindowController* wc = (__bridge KOWindowController*)*(void**)lua_touserdata(L, lua_upvalueindex(1));
     
     int i = luaL_ref(L, LUA_REGISTRYINDEX);
     
@@ -41,7 +41,7 @@ static int win_resized(lua_State *L) {
 
 // args: [win, fn(t)]
 static int win_keydown(lua_State *L) {
-    KOWindowController* wc = (__bridge KOWindowController*)*(void**)lua_touserdata(L, 1);
+    KOWindowController* wc = (__bridge KOWindowController*)*(void**)lua_touserdata(L, lua_upvalueindex(1));
     
     int i = luaL_ref(L, LUA_REGISTRYINDEX);
     
@@ -66,7 +66,7 @@ static int win_keydown(lua_State *L) {
 
 // args: [win]
 static int win_getsize(lua_State *L) {
-    KOWindowController* wc = (__bridge KOWindowController*)*(void**)lua_touserdata(L, 1);
+    KOWindowController* wc = (__bridge KOWindowController*)*(void**)lua_touserdata(L, lua_upvalueindex(1));
     lua_pushnumber(L, [wc cols]);
     lua_pushnumber(L, [wc rows]);
     return 2;
@@ -74,7 +74,7 @@ static int win_getsize(lua_State *L) {
 
 // args: [win, char, x, y, fg, bg]
 static int win_set(lua_State *L) {
-    KOWindowController* wc = (__bridge KOWindowController*)*(void**)lua_touserdata(L, 1);
+    KOWindowController* wc = (__bridge KOWindowController*)*(void**)lua_touserdata(L, lua_upvalueindex(1));
     
     NSString* c = [NSString stringWithFormat:@"%C", (unsigned short)lua_tonumber(L, 2)];
     int x = lua_tonumber(L, 3) - 1;
@@ -89,7 +89,7 @@ static int win_set(lua_State *L) {
 
 // args: [win, str, x, y, fg, bg]
 static int win_setw(lua_State *L) {
-    KOWindowController* wc = (__bridge KOWindowController*)*(void**)lua_touserdata(L, 1);
+    KOWindowController* wc = (__bridge KOWindowController*)*(void**)lua_touserdata(L, lua_upvalueindex(1));
     
     NSString* c = [NSString stringWithUTF8String: lua_tostring(L, 2)];
     int x = lua_tonumber(L, 3) - 1;
@@ -104,7 +104,7 @@ static int win_setw(lua_State *L) {
 
 // args: [win, bg]
 static int win_clear(lua_State *L) {
-    KOWindowController* wc = (__bridge KOWindowController*)*(void**)lua_touserdata(L, 1);
+    KOWindowController* wc = (__bridge KOWindowController*)*(void**)lua_touserdata(L, lua_upvalueindex(1));
     
     NSColor* bg = SDColorFromHex(lua_tostring(L, 2));
     [wc clear:bg];
@@ -114,7 +114,7 @@ static int win_clear(lua_State *L) {
 
 // args: [win, w, h]
 static int win_resize(lua_State *L) {
-    KOWindowController* wc = (__bridge KOWindowController*)*(void**)lua_touserdata(L, 1);
+    KOWindowController* wc = (__bridge KOWindowController*)*(void**)lua_touserdata(L, lua_upvalueindex(1));
     
     int w = lua_tonumber(L, 2);
     int h = lua_tonumber(L, 3);
@@ -125,7 +125,7 @@ static int win_resize(lua_State *L) {
 
 // args: [win, name, size]
 static int win_usefont(lua_State *L) {
-    KOWindowController* wc = (__bridge KOWindowController*)*(void**)lua_touserdata(L, 1);
+    KOWindowController* wc = (__bridge KOWindowController*)*(void**)lua_touserdata(L, lua_upvalueindex(1));
     
     NSString* name = [NSString stringWithUTF8String: lua_tostring(L, 2)];
     double size = lua_tonumber(L, 3);
@@ -139,7 +139,7 @@ static int win_usefont(lua_State *L) {
 // args: [win]
 // returns: [name, size]
 static int win_getfont(lua_State *L) {
-    KOWindowController* wc = (__bridge KOWindowController*)*(void**)lua_touserdata(L, 1);
+    KOWindowController* wc = (__bridge KOWindowController*)*(void**)lua_touserdata(L, lua_upvalueindex(1));
     
     NSFont* font = [wc font];
     
@@ -151,7 +151,7 @@ static int win_getfont(lua_State *L) {
 
 // args: [win, title]
 static int win_settitle(lua_State *L) {
-    KOWindowController* wc = (__bridge KOWindowController*)*(void**)lua_touserdata(L, 1);
+    KOWindowController* wc = (__bridge KOWindowController*)*(void**)lua_touserdata(L, lua_upvalueindex(1));
     
     NSString* title = [NSString stringWithUTF8String: lua_tostring(L, 2)];
     [[wc window] setTitle:title];
@@ -159,12 +159,23 @@ static int win_settitle(lua_State *L) {
     return 0;
 }
 
-static const luaL_Reg winlib[] = {
+// args: [win]
+static int win_close(lua_State *L) {
+    KOWindowController* wc = (__bridge KOWindowController*)*(void**)lua_touserdata(L, lua_upvalueindex(1));
+    
+    [wc close];
+    
+    return 0;
+}
+
+static const luaL_Reg winlib_instance[] = {
     // event handlers
     {"resized", win_resized},
     {"keydown", win_keydown},
     
     // methods
+    {"close", win_close},
+    
     {"getsize", win_getsize},
     {"resize", win_resize},
     
@@ -177,6 +188,47 @@ static const luaL_Reg winlib[] = {
     
     {"settitle", win_settitle},
     
+    {NULL, NULL}
+};
+
+static int win_gc(lua_State *L) {
+    KOWindowController* wc = (__bridge_transfer KOWindowController*)*(void**)lua_touserdata(L, 1);
+    [wc close];
+    return 0;
+}
+
+// args: []
+// returns: [win]
+static int win_new(lua_State *L) {
+    KOWindowController* wc = [[KOWindowController alloc] init];
+    [wc showWindow: nil];
+    void* ud = (__bridge_retained void*)wc;
+    
+    /*
+     - the __gc method /automatically/ gets the userdata as its arg
+     - predefined methods will share the userdata as an upvalue
+     */
+    
+    lua_newtable(L);                                  // [win]
+    lua_newtable(L);                                  // [win, {}]
+    luaL_newlibtable(L, winlib_instance);             // [win, {}, methods]
+    
+    *(void**)lua_newuserdata(L, sizeof(void*)) = ud;  // [win, {}, methods, ud]
+    lua_newtable(L);                                  // [win, {}, methods, ud, {}]
+    lua_pushcfunction(L, win_gc);                     // [win, {}, methods, ud, {}, gc]
+    lua_setfield(L, -2, "__gc");                      // [win, {}, methods, ud, {...}]
+    lua_setmetatable(L, -2);                          // [win, {}, methods, ud]
+    
+    luaL_setfuncs(L, winlib_instance, 1);             // [win, {}, methods]
+    
+    lua_setfield(L, -2, "__index");                   // [win, {...}]
+    lua_setmetatable(L, -2);                          // [win]
+    
+    return 1;
+}
+
+static const luaL_Reg winlib[] = {
+    {"new", win_new},
     {NULL, NULL}
 };
 

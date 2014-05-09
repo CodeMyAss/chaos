@@ -1,3 +1,5 @@
+local window = window.new()
+
 window:settitle("Hello from Chaos.app!")
 
 function Utf8to32(utf8str)

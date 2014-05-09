@@ -6,29 +6,21 @@
 int luaopen_window(lua_State* L);
 
 @interface KOAppDelegate ()
-@property KOWindowController* wc;
+@property lua_State* L;
 @end
 
 @implementation KOAppDelegate
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
-    self.wc = [[KOWindowController alloc] init];
-    [self.wc showWindow:self];
-    
     NSString* resourcePath = [[NSBundle mainBundle] resourcePath];
     const char* core_dir = [[resourcePath stringByAppendingPathComponent:@"?.lua"] fileSystemRepresentation];
     const char* user_dir = [[@"~/.hydra/?.lua" stringByStandardizingPath] fileSystemRepresentation];
     
     lua_State* L = luaL_newstate();
+    self.L = L;
     luaL_openlibs(L);
     
-    void** container = lua_newuserdata(L, sizeof(KOWindowController*));
-    void* wc = (__bridge void*)self.wc;
-    *container = wc;                 // [wc]
-    lua_newtable(L);                 // [wc, {}]
-    luaopen_window(L);               // [wc, {}, window]
-    lua_setfield(L, -2, "__index");  // [wc, {__index = window}]
-    lua_setmetatable(L, -2);         // [wc]
+    luaopen_window(L);               // [window]
     lua_setglobal(L, "window");      // []
     
     lua_getglobal(L, "package");     // [package]
