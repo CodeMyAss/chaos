@@ -153,18 +153,16 @@
     }
 }
 
-- (void) setStr:(NSString*)str x:(int)x y:(int)y fg:(NSColor*)fg bg:(NSColor*)bg {
+- (void) setChar:(unsigned short)c x:(int)x y:(int)y fg:(NSColor*)fg bg:(NSColor*)bg {
     NSUInteger i = x + y * self.cols;
-    NSRange r = NSMakeRange(i, [str length]);
-    [self.buffer replaceCharactersInRange:r withString:str];
+    NSRange r = NSMakeRange(i, 1);
+    [self.buffer replaceCharactersInRange:r withString:[NSString stringWithFormat:@"%C", c]];
     if (fg) [self.buffer addAttribute:NSForegroundColorAttributeName value:fg range:r];
     if (bg) [self.buffer addAttribute:NSBackgroundColorAttributeName value:bg range:r];
     
     if (!self.postponeRedraws) {
-        for (NSUInteger j = i; j < i + [str length]; j++) {
-            NSRect r = [self rectForCharacterIndex:j];
-            [self setNeedsDisplayInRect:r];
-        }
+        NSRect r = [self rectForCharacterIndex:i];
+        [self setNeedsDisplayInRect:r];
     }
 }
 

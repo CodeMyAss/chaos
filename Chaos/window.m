@@ -76,28 +76,13 @@ static int win_getsize(lua_State *L) {
 static int win_set(lua_State *L) {
     KOWindowController* wc = (__bridge KOWindowController*)*(void**)lua_touserdata(L, lua_upvalueindex(1));
     
-    NSString* c = [NSString stringWithFormat:@"%C", (unsigned short)lua_tonumber(L, 2)];
+    unsigned short c = lua_tonumber(L, 2);
     int x = lua_tonumber(L, 3) - 1;
     int y = lua_tonumber(L, 4) - 1;
     NSColor* fg = SDColorFromHex(lua_tostring(L, 5));
     NSColor* bg = SDColorFromHex(lua_tostring(L, 6));
     
-    [wc setStr:c x:x y:y fg:fg bg:bg];
-    
-    return 0;
-}
-
-// args: [win, str, x, y, fg, bg]
-static int win_setw(lua_State *L) {
-    KOWindowController* wc = (__bridge KOWindowController*)*(void**)lua_touserdata(L, lua_upvalueindex(1));
-    
-    NSString* c = [NSString stringWithUTF8String: lua_tostring(L, 2)];
-    int x = lua_tonumber(L, 3) - 1;
-    int y = lua_tonumber(L, 4) - 1;
-    NSColor* fg = SDColorFromHex(lua_tostring(L, 5));
-    NSColor* bg = SDColorFromHex(lua_tostring(L, 6));
-    
-    [wc setStr:c x:x y:y fg:fg bg:bg];
+    [wc setChar:c x:x y:y fg:fg bg:bg];
     
     return 0;
 }
@@ -181,7 +166,6 @@ static const luaL_Reg winlib_instance[] = {
     
     {"clear", win_clear},
     {"set", win_set},
-    {"setw", win_setw},
     
     {"usefont", win_usefont},
     {"getfont", win_getfont},

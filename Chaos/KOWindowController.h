@@ -10,7 +10,7 @@
 - (int) cols;
 - (int) rows;
 
-- (void) setStr:(NSString*)str x:(int)x y:(int)y fg:(NSColor*)fg bg:(NSColor*)bg;
+- (void) setChar:(unsigned short)c x:(int)x y:(int)y fg:(NSColor*)fg bg:(NSColor*)bg;
 - (void) clear:(NSColor*)bg;
 
 @property (copy) dispatch_block_t windowResizedHandler;

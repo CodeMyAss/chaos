@@ -61,8 +61,8 @@
     return self.tv.rows;
 }
 
-- (void) setStr:(NSString*)str x:(int)x y:(int)y fg:(NSColor*)fg bg:(NSColor*)bg {
-    [self.tv setStr:str x:x y:y fg:fg bg:bg];
+- (void) setChar:(unsigned short)c x:(int)x y:(int)y fg:(NSColor*)fg bg:(NSColor*)bg {
+    [self.tv setChar:c x:x y:y fg:fg bg:bg];
 }
 
 - (void) useGridSize:(NSSize)size {
