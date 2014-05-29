@@ -38,6 +38,10 @@ local function clearbottom()
     end
 end
 
+local function printcursor(x, y)
+    window:set(string.byte(" "), x, y, bg, fg)
+end
+
 local function redraw()
     local w, h = window:getsize()
 
@@ -45,6 +49,7 @@ local function redraw()
     printstr(1, 1, stdout)
     clearbottom()
     printstr(1, h, "> " .. stdin)
+    printcursor(3 + string.len(stdin), h)
 end
 
 window:resized(redraw)
