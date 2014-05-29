@@ -4,7 +4,7 @@ A hackable text editor for the 22nd century.
 
 #### What does it look like?
 
-Coming soon.
+![sshot.png](sshot.png)
 
 #### How do you hack it?
 
