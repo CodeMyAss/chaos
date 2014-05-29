@@ -51,4 +51,3 @@ Here's a quine: [init.lua](https://github.com/sdegutis/chaos/blob/87f9177f4ee030
 - add copy/paste to API
 - add convenient way to print whole string (write it in lua)
 - add mouse functionality to API
-- make developer console into a loadable module

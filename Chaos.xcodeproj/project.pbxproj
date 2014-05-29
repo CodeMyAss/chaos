@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		941E60941937F6F8004A61F7 /* devconsole.lua in Resources */ = {isa = PBXBuildFile; fileRef = 941E60931937F6F8004A61F7 /* devconsole.lua */; };
 		9443A78F190C492600C7D543 /* lapi.c in Sources */ = {isa = PBXBuildFile; fileRef = 9443A756190C492600C7D543 /* lapi.c */; };
 		9443A790190C492600C7D543 /* lauxlib.c in Sources */ = {isa = PBXBuildFile; fileRef = 9443A758190C492600C7D543 /* lauxlib.c */; };
 		9443A791190C492600C7D543 /* lbaselib.c in Sources */ = {isa = PBXBuildFile; fileRef = 9443A75A190C492600C7D543 /* lbaselib.c */; };
@@ -52,6 +53,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		941E60931937F6F8004A61F7 /* devconsole.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = devconsole.lua; sourceTree = "<group>"; };
 		9443A756190C492600C7D543 /* lapi.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lapi.c; sourceTree = "<group>"; };
 		9443A757190C492600C7D543 /* lapi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lapi.h; sourceTree = "<group>"; };
 		9443A758190C492600C7D543 /* lauxlib.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lauxlib.c; sourceTree = "<group>"; };
@@ -257,6 +259,7 @@
 				94692AA1190F399C00DDF7DC /* KOTextView.m */,
 				9443A7B6190C530500C7D543 /* window.m */,
 				9443A7AF190C513200C7D543 /* init.lua */,
+				941E60931937F6F8004A61F7 /* devconsole.lua */,
 				94FE19981909BF3B0071DC3C /* MainMenu.xib */,
 				94FE199B1909BF3B0071DC3C /* Images.xcassets */,
 				94FE198A1909BF3B0071DC3C /* Supporting Files */,
@@ -328,6 +331,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				94FE199C1909BF3B0071DC3C /* Images.xcassets in Resources */,
+				941E60941937F6F8004A61F7 /* devconsole.lua in Resources */,
 				9443A7B5190C51EF00C7D543 /* KOWindowController.xib in Resources */,
 				9443A7B0190C513200C7D543 /* init.lua in Resources */,
 				94FE199A1909BF3B0071DC3C /* MainMenu.xib in Resources */,
