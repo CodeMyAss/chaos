@@ -2,7 +2,7 @@
 
 A hackable text editor for the 22nd century.
 
-![chaos.png](chaos.png)
+![chaos.png](https://raw.githubusercontent.com/sdegutis/chaos/master/chaos.png)
 
 #### Start hacking it
 
