@@ -1,8 +1,8 @@
 ### Chaos
 
-Source to this screenshot: [init.lua](https://github.com/sdegutis/chaos/blob/2dcaf408287553f7ec24ca0d859ac6492d71ef6d/Chaos/init.lua)
+The completely extensible text editor.
 
-![sshot.png](sshot.png)
+*Written in its own extension language.*
 
 #### What is it?
 
@@ -29,22 +29,6 @@ given char, fg color, and bg color. That's all.
 Anyway, this is meant to be a lower-level API that you write a useful
 thing on top of. It was basically born out of my frustration with the
 ncurses API and the inability to use any color I want in the terminal.
-
-#### But why Lua?
-
-1. It's so small of a language that I can literally just throw its
-   entire source code right into this project.
-2. It's super fast. Like, way fast. For serious.
-3. It's a really simple language. And simplicity is my favorite thing
-   ever lately.
-4. It's not that bad, really. Sure, there are a few weird things, but
-   they're minor.
-
-#### Example
-
-Here's a quine: [init.lua](https://github.com/sdegutis/chaos/blob/87f9177f4ee030ab931199b8a4b5f983017d0283/Chaos/init.lua)
-
-![quine.png](quine.png)
 
 #### TODO
 
