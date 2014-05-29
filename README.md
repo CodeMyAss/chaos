@@ -8,5 +8,6 @@ A hackable text editor for the 22nd century.
 
 Chaos's API uses [Lua](http://phrogz.net/lua/LearningLua_FromJS.html).
 
-At launch-time, it reads `~/.chaos/init.lua`, which can require several
-modules, most notably `window` and `devconsole`. API docs coming soon.
+When Chaos launches, it runs `~/.chaos/init.lua`.
+
+Full API docs coming soon.
