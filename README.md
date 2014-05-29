@@ -2,7 +2,7 @@
 
 A hackable text editor for the 22nd century.
 
-![sshot.png](sshot.png)
+![chaos.png](chaos.png)
 
 #### Start hacking it
 

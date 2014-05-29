@@ -6,6 +6,18 @@ local bg = "222222"
 
 local contents = ""
 
+local function printstr(str, x, y, fg, bg)
+   local w, h = win:getsize()
+
+   for i = 1, #str do
+      if x == w + 1 then break end
+
+      local c = str:sub(i,i):byte()
+      win:set(c, x, y, fg, bg)
+      x = x + 1
+   end
+end
+
 local function printdoc()
    local w, h = win:getsize()
 
@@ -25,7 +37,6 @@ local function printdoc()
          x = 1
          y = y + 1
       else
-         print(c, x, y, fg, bg)
          win:set(c, x, y, fg, bg)
          x = x + 1
       end
@@ -36,8 +47,12 @@ local function printdoc()
 end
 
 local function redraw()
+   local w, h = win:getsize()
+
    win:clear(bg)
    printdoc()
+
+   printstr("<untitled file>", 1, h, bg, fg)
 end
 
 win:resized(redraw)
