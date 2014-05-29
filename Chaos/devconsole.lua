@@ -77,8 +77,6 @@ function devconsole.new()
                end)
 
    redraw()
-
-   print("ready")
 end
 
 return devconsole

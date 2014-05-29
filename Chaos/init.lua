@@ -1,3 +1,7 @@
-local devconsole = require("devconsole")
+-- local devconsole = require("devconsole")
+-- devconsole.new()
 
-devconsole.new()
+local editor = require("editor")
+editor.new()
+
+print("ready")
