@@ -37,6 +37,10 @@ It's just a grid of fixed-width text. That's it. There's no fancy GUI to manipul
 
 This does have its trade-offs, that's true: you can't read your code in Arial since the font must be monospace, you can't do super fancy CSS-17 animation tricks, and you can't draw rounded rectangles. But it's quite a worthwhile trade-off to get this level of simplicity, and all its accompanying benefits.
 
+## Getting started
+
+Because Chaos is still in early development, only the ground-work has been laid out, and the basic text editing functionality still needs work. Therefore it's not quite usable at this moment.
+
 ## Want to help out?
 
-Chaos is still in early development, and lacking important functionality. If you want to help bring Chaos to maturity, see the issues page on Github.
+If you want to help bring Chaos to maturity, see [the issues page on Github](https://github.com/sdegutis/chaos/issues). Or you can comment on the relevant [Hacker News post](https://news.ycombinator.com/item?id=7841168) to voice your support for the project.
