@@ -25,11 +25,15 @@ It's just a grid of fixed-width text. That's it. There's no fancy GUI to manipul
 
 - Extremely efficient on resources
 
-  Draws fast as nightning, with a negligible re-drawing cost. Super low on memory. Isn't going to burn out your new laptop's CPU, and isn't going to run sluggishly on your 3-year-old desktop computer.
+  Draws fast as lightning, with a negligible re-drawing cost. Super low on memory. Isn't going to burn out your new laptop's CPU, and isn't going to run sluggishly on your 3-year-old desktop computer.
 
 - Dead-simple graphics API
 
   It's super easy to write code that draws exactly the kind of thing you want to, within the limitations. Anyone can hack on the rendering internals, since it lacks the complexity of WebKit. And it's [not going to look ugly again every 6 months](http://en.wikipedia.org/wiki/Planned_obsolescence), unlike *every website*.
+
+- It doesn't have to be ugly
+
+  Foreground and background colors are specified using 6-digit hex codes, just like in CSS, so you get way more color than you do in terminal emulators. Plus, there are many aesthetically pleasing monospace fonts.
 
 This does have its trade-offs, that's true: you can't read your code in Arial since the font must be monospace, you can't do super fancy CSS-17 animation tricks, and you can't draw rounded rectangles. But it's quite a worthwhile trade-off to get this level of simplicity, and all its accompanying benefits.
 

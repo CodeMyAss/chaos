@@ -1,8 +1,8 @@
 local win = window.new()
 win:settitle("Untitled")
 
-local fg = "00FF00"
-local bg = "222222"
+local fg = "839496"
+local bg = "002b36"
 
 local contents = ""
 
@@ -43,7 +43,7 @@ local function printdoc()
    end
 
    -- draw cursor
-   win:set(string.byte(" "), x, y, bg, fg)
+   win:set(string.byte(" "), x, y, bg, "839496")
 end
 
 local function redraw()
