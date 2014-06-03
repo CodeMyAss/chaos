@@ -41,27 +41,39 @@
 <h3>
 <a name="written-in-itself" class="anchor" href="#written-in-itself"><span class="octicon octicon-link"></span></a>Written in itself</h3>
 
-<p>The entire text editor is written in Lua, even the cursor! So you can easily extend <em>every single aspect</em> of the text editor, with full control. The only part not written in Lua is the part that draws the characters super fast, which leads me to the next feature:</p>
-
-<h3>
-<a name="just-a-grid-of-monospace-characters" class="anchor" href="#just-a-grid-of-monospace-characters"><span class="octicon octicon-link"></span></a>Just a grid of monospace characters</h3>
-
-<p>It's just a grid of text. That's it. There's no fancy GUI to manipulate. This makes it:</p>
+<p>The entire text editor is written in Lua!</p>
 
 <ul>
-<li>Fast as lightning</li>
-<li>Super low on memory</li>
-<li>Dead-simple to program for</li>
-</ul><p>It won't slow down your older desktop, and it won't fry your new laptop's CPU and GPU.</p>
+<li>Cursor(s?)</li>
+<li>Buffer storage</li>
+<li>Buffer drawing</li>
+<li>File representation</li>
+<li>Panes/splits</li>
+<li>Basically everything</li>
+</ul><p>So you can easily extend <em>every single aspect</em> of the text editor, with full control. The only part not written in Lua is the part that draws the characters super fast, which leads me to the next feature...</p>
+
+<h3>
+<a name="just-a-grid-of-characters" class="anchor" href="#just-a-grid-of-characters"><span class="octicon octicon-link"></span></a>Just a grid of characters</h3>
+
+<p>It's just a grid of fixed-width text. That's it. There's no fancy GUI to manipulate. This has some very clear advantages over text editors with fancy rendering engines.</p>
+
+<ul>
+<li>
+<p>Extremely efficient on resources</p>
+
+<p>Draws fast as nightning, with a negligible re-drawing cost. Super low on memory. Isn't going to burn out your new laptop's CPU, and isn't going to run sluggishly on your 3-year-old desktop computer.</p>
+</li>
+<li>
+<p>Dead-simple graphics API</p>
+
+<p>It's super easy to write code that draws exactly the kind of thing you want to, within the limitations. Anyone can hack on the rendering internals, since it lacks the complexity of WebKit. And it's <a href="http://en.wikipedia.org/wiki/Planned_obsolescence">not going to look ugly again every 6 months</a>, unlike <em>every website</em>.</p>
+</li>
+</ul><p>This does have its trade-offs, that's true: you can't read your code in Arial since the font must be monospace, you can't do super fancy CSS-17 animation tricks, and you can't draw rounded rectangles. But it's quite a worthwhile trade-off to get this level of simplicity, and all its accompanying benefits.</p>
 
 <h2>
-<a name="start-hacking-it" class="anchor" href="#start-hacking-it"><span class="octicon octicon-link"></span></a>Start hacking it</h2>
+<a name="want-to-help-out" class="anchor" href="#want-to-help-out"><span class="octicon octicon-link"></span></a>Want to help out?</h2>
 
-<p>Chaos's API uses <a href="http://phrogz.net/lua/LearningLua_FromJS.html">Lua</a>.</p>
-
-<p>When Chaos launches, it runs <code>~/.chaos/init.lua</code>.</p>
-
-<p>Full API docs coming soon.</p>
+<p>Chaos is still in early development, and lacking important functionality. If you want to help bring Chaos to maturity, see the issues page on Github.</p>
       </section>
       <footer>
         <p>This project is maintained by <a href="https://github.com/sdegutis">sdegutis</a></p>
