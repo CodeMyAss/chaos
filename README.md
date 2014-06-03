@@ -8,7 +8,16 @@ A hackable text editor for the 22nd century.
 
 ### Written in itself
 
-The entire text editor is written in Lua, even the cursor! So you can easily extend *every single aspect* of the text editor, with full control. The only part not written in Lua is the part that draws the characters super fast, which leads me to the next feature...
+The entire text editor is written in Lua!
+
+- Cursor(s?)
+- Buffer storage
+- Buffer drawing
+- File representation
+- Panes/splits
+- Basically everything
+
+So you can easily extend *every single aspect* of the text editor, with full control. The only part not written in Lua is the part that draws the characters super fast, which leads me to the next feature...
 
 ### Just a grid of characters
 
