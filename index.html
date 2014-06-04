@@ -36,12 +36,10 @@
 <p><img src="https://raw.githubusercontent.com/sdegutis/chaos/master/chaos.png" alt="chaos.png"></p>
 
 <h2>
-<a name="hows-it-different" class="anchor" href="#hows-it-different"><span class="octicon octicon-link"></span></a>How's it different?</h2>
+<a name="written-in-its-own-extension-api" class="anchor" href="#written-in-its-own-extension-api"><span class="octicon octicon-link"></span></a>Written in its own extension API</h2>
 
-<h3>
-<a name="written-in-itself" class="anchor" href="#written-in-itself"><span class="octicon octicon-link"></span></a>Written in itself</h3>
-
-<p>The entire text editor is written in Lua!</p>
+<p>The entire text editor is written using its own extension API which is
+written in Lua!</p>
 
 <ul>
 <li>Cursor(s?)</li>
@@ -50,40 +48,90 @@
 <li>File representation</li>
 <li>Panes/splits</li>
 <li>Basically everything</li>
-</ul><p>So you can easily extend <em>every single aspect</em> of the text editor, with full control. The only part not written in Lua is the part that draws the characters super fast, which leads me to the next feature...</p>
-
-<h3>
-<a name="just-a-grid-of-characters" class="anchor" href="#just-a-grid-of-characters"><span class="octicon octicon-link"></span></a>Just a grid of characters</h3>
-
-<p>It's just a grid of fixed-width text. That's it. There's no fancy GUI to manipulate. This has some very clear advantages over text editors with fancy rendering engines.</p>
-
-<ul>
-<li>
-<p>Extremely efficient on resources</p>
-
-<p>Draws fast as lightning, with a negligible re-drawing cost. Super low on memory. Isn't going to burn out your new laptop's CPU, and isn't going to run sluggishly on your 3-year-old desktop computer.</p>
-</li>
-<li>
-<p>Dead-simple graphics API</p>
-
-<p>It's super easy to write code that draws exactly the kind of thing you want to, within the limitations. Anyone can hack on the rendering internals, since it lacks the complexity of WebKit. And it's <a href="http://en.wikipedia.org/wiki/Planned_obsolescence">not going to look ugly again every 6 months</a>, unlike <em>every website</em>.</p>
-</li>
-<li>
-<p>It doesn't have to be ugly</p>
-
-<p>Foreground and background colors are specified using 6-digit hex codes, just like in CSS, so you get way more color than you do in terminal emulators. Plus, there are many aesthetically pleasing monospace fonts.</p>
-</li>
-</ul><p>This does have its trade-offs, that's true: you can't read your code in Arial since the font must be monospace, you can't do super fancy CSS-17 animation tricks, and you can't draw rounded rectangles. But it's quite a worthwhile trade-off to get this level of simplicity, and all its accompanying benefits.</p>
+</ul><p>This means there's no difference between the text editor itself and
+its extensions/plugins. We can extend <em>every single aspect</em> of the
+text editor, with full control. The only part written in native code
+is the part that draws the characters super fast, which leads me to
+the next feature...</p>
 
 <h2>
+<a name="just-a-grid-of-characters" class="anchor" href="#just-a-grid-of-characters"><span class="octicon octicon-link"></span></a>Just a grid of characters</h2>
+
+<p>It's just a grid of fixed-width text. That's it. There's no fancy GUI
+to manipulate. This has some very clear advantages over text editors
+with fancy rendering engines.</p>
+
+<h4>
+<a name="extremely-efficient-on-resources" class="anchor" href="#extremely-efficient-on-resources"><span class="octicon octicon-link"></span></a>Extremely efficient on resources</h4>
+
+<p>Draws fast as lightning, with a negligible re-drawing cost. Super low
+on memory. Isn't going to burn out your new laptop's CPU, and isn't
+going to run sluggishly on your 3-year-old desktop computer.</p>
+
+<h4>
+<a name="dead-simple-graphics-api" class="anchor" href="#dead-simple-graphics-api"><span class="octicon octicon-link"></span></a>Dead-simple graphics API</h4>
+
+<p>It's super easy to write code that draws exactly the kind of thing you
+want to, within the limitations. Anyone can hack on the rendering
+internals, since it lacks the complexity of WebKit. And it's
+<a href="http://en.wikipedia.org/wiki/Planned_obsolescence">not going to look ugly again every 6 months</a>, unlike <em>every
+website</em>.</p>
+
+<h4>
+<a name="it-doesnt-have-to-be-ugly" class="anchor" href="#it-doesnt-have-to-be-ugly"><span class="octicon octicon-link"></span></a>It doesn't have to be ugly</h4>
+
+<p>Foreground and background colors are specified using 6-digit hex
+codes, just like in CSS, so you get way more color than you do in
+terminal emulators. Plus, there are many aesthetically pleasing
+monospace fonts.</p>
+
+<h4>
+<a name="simplicity-over-everything" class="anchor" href="#simplicity-over-everything"><span class="octicon octicon-link"></span></a>Simplicity over everything</h4>
+
+<p>This does have its trade-offs, that's true: you can't read your code
+in Arial since the font must be monospace, you can't do super fancy
+CSS-17 animation tricks, and you can't draw rounded rectangles. But
+it's quite a worthwhile trade-off to get this level of simplicity, and
+all its accompanying benefits.</p>
+
+<h2>
+<a name="hows-it-different" class="anchor" href="#hows-it-different"><span class="octicon octicon-link"></span></a>How's it different?</h2>
+
+<h4>
+<a name="compared-to-terminal-based-editors" class="anchor" href="#compared-to-terminal-based-editors"><span class="octicon octicon-link"></span></a>Compared to terminal-based editors:</h4>
+
+<ul>
+<li>Way more than 256-colors</li>
+<li>Perfectly precise modifier detection</li>
+<li>Modifiers and keys are separate</li>
+<li>Much simpler drawing API</li>
+</ul><h4>
+<a name="compared-to-gui-heavy-editors" class="anchor" href="#compared-to-gui-heavy-editors"><span class="octicon octicon-link"></span></a>Compared to GUI-heavy editors:</h4>
+
+<ul>
+<li>Much simpler drawing API</li>
+<li>Completely customizable</li>
+</ul><h4>
+<a name="compared-to-emacs" class="anchor" href="#compared-to-emacs"><span class="octicon octicon-link"></span></a>Compared to Emacs:</h4>
+
+<ul>
+<li>Uses a mainstream extension language</li>
+<li>Aims to have sane, modern defaults</li>
+</ul><h2>
 <a name="getting-started" class="anchor" href="#getting-started"><span class="octicon octicon-link"></span></a>Getting started</h2>
 
-<p>Because Chaos is still in early development, only the ground-work has been laid out, and the basic text editing functionality still needs work. Therefore it's not quite usable at this moment.</p>
+<p>Because Chaos is still in early development, only the ground-work has
+been laid out, and the basic text editing functionality still needs
+work. Therefore it's not quite usable at this moment.</p>
 
 <h2>
 <a name="want-to-help-out" class="anchor" href="#want-to-help-out"><span class="octicon octicon-link"></span></a>Want to help out?</h2>
 
-<p>If you want to help bring Chaos to maturity, see <a href="https://github.com/sdegutis/chaos/issues">the issues page on Github</a>. Or you can comment on the relevant <a href="https://news.ycombinator.com/item?id=7841168">Hacker News post</a> to voice your support for the project.</p>
+<p>If you want to help bring Chaos to maturity, see
+<a href="https://github.com/sdegutis/chaos/issues">the issues page on Github</a>. Or
+you can comment on the relevant
+<a href="https://news.ycombinator.com/item?id=7841168">Hacker News post</a> to
+voice your support for the project.</p>
       </section>
       <footer>
         <p>This project is maintained by <a href="https://github.com/sdegutis">sdegutis</a></p>
