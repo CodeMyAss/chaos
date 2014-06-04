@@ -28,27 +28,28 @@ It's just a grid of fixed-width text. That's it. There's no fancy GUI
 to manipulate. This has some very clear advantages over text editors
 with fancy rendering engines.
 
-- Extremely efficient on resources
+#### Extremely efficient on resources
 
-  Draws fast as lightning, with a negligible re-drawing cost. Super
-  low on memory. Isn't going to burn out your new laptop's CPU, and
-  isn't going to run sluggishly on your 3-year-old desktop computer.
+Draws fast as lightning, with a negligible re-drawing cost. Super low
+on memory. Isn't going to burn out your new laptop's CPU, and isn't
+going to run sluggishly on your 3-year-old desktop computer.
 
-- Dead-simple graphics API
+#### Dead-simple graphics API
 
-  It's super easy to write code that draws exactly the kind of thing
-  you want to, within the limitations. Anyone can hack on the
-  rendering internals, since it lacks the complexity of WebKit. And
-  it's
-  [not going to look ugly again every 6 months][^1],
-  unlike *every website*.
+It's super easy to write code that draws exactly the kind of thing you
+want to, within the limitations. Anyone can hack on the rendering
+internals, since it lacks the complexity of WebKit. And it's
+[not going to look ugly again every 6 months][^1], unlike *every
+website*.
 
-- It doesn't have to be ugly
+#### It doesn't have to be ugly
 
-  Foreground and background colors are specified using 6-digit hex
-  codes, just like in CSS, so you get way more color than you do in
-  terminal emulators. Plus, there are many aesthetically pleasing
-  monospace fonts.
+Foreground and background colors are specified using 6-digit hex
+codes, just like in CSS, so you get way more color than you do in
+terminal emulators. Plus, there are many aesthetically pleasing
+monospace fonts.
+
+#### Simplicity over everything
 
 This does have its trade-offs, that's true: you can't read your code
 in Arial since the font must be monospace, you can't do super fancy
@@ -58,17 +59,22 @@ all its accompanying benefits.
 
 ## How's it different?
 
-### Compared to terminal-based editors:
+#### Compared to terminal-based editors:
 
 * Way more than 256-colors
 * Perfectly precise modifier detection
 * Modifiers and keys are separate
 * Much simpler drawing API
 
-### Compared to GUI-heavy editors:
+#### Compared to GUI-heavy editors:
 
 * Much simpler drawing API
 * Completely customizable
+
+#### Compared to Emacs:
+
+* Uses a mainstream extension language
+* Aims to have sane, modern defaults
 
 ## Getting started
 
